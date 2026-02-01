@@ -113,6 +113,14 @@ public final class Compiler: Sendable {
         case "end_date": return .endDate
         case "source": return .source
         case "device": return .device
+        // Category fields
+        case "stage": return .stage
+        case "severity": return .severity
+        // Workout fields
+        case "activity_type": return .activityType
+        case "duration": return .duration
+        case "total_calories": return .totalCalories
+        case "distance": return .distance
         default:
             throw CompilerError.unknownField(name)
         }

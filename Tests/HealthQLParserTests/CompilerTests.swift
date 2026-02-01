@@ -364,6 +364,70 @@ struct CompilerSourceResolutionTests {
     }
 }
 
+@Suite("Compiler Field Resolution Tests")
+struct CompilerFieldResolutionTests {
+
+    @Test("Compiler resolves duration field")
+    func compileDurationField() throws {
+        let stmt = SelectStatement(
+            selections: [.identifier("duration")],
+            from: "workouts",
+            whereClause: nil,
+            groupBy: nil,
+            orderBy: nil,
+            limit: nil
+        )
+        let compiler = Compiler()
+        let query = try compiler.compile(stmt)
+
+        if case .field(let field) = query.selections[0] {
+            #expect(field == .duration)
+        } else {
+            Issue.record("Expected field selection")
+        }
+    }
+
+    @Test("Compiler resolves activity_type field")
+    func compileActivityTypeField() throws {
+        let stmt = SelectStatement(
+            selections: [.identifier("activity_type")],
+            from: "workouts",
+            whereClause: nil,
+            groupBy: nil,
+            orderBy: nil,
+            limit: nil
+        )
+        let compiler = Compiler()
+        let query = try compiler.compile(stmt)
+
+        if case .field(let field) = query.selections[0] {
+            #expect(field == .activityType)
+        } else {
+            Issue.record("Expected field selection")
+        }
+    }
+
+    @Test("Compiler resolves total_calories field")
+    func compileTotalCaloriesField() throws {
+        let stmt = SelectStatement(
+            selections: [.identifier("total_calories")],
+            from: "workouts",
+            whereClause: nil,
+            groupBy: nil,
+            orderBy: nil,
+            limit: nil
+        )
+        let compiler = Compiler()
+        let query = try compiler.compile(stmt)
+
+        if case .field(let field) = query.selections[0] {
+            #expect(field == .totalCalories)
+        } else {
+            Issue.record("Expected field selection")
+        }
+    }
+}
+
 @Suite("Compiler Error Tests")
 struct CompilerErrorTests {
 
