@@ -57,4 +57,11 @@ public struct QueryBuilder: Sendable {
             limit: queryLimit
         )
     }
+
+    /// Execute the query and return results
+    public func execute() async throws -> QueryResult {
+        let query = buildQuery()
+        let executor = HealthQueryExecutor()
+        return try await executor.execute(query)
+    }
 }

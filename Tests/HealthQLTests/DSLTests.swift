@@ -112,3 +112,18 @@ struct DateConvenienceTests {
         #expect(reference.date == expected)
     }
 }
+
+@Suite("DSL Execute Tests")
+struct DSLExecuteTests {
+
+    @Test("QueryBuilder.execute returns QueryResult")
+    func executeReturnsResult() async throws {
+        let result = try await Health.select(.steps, aggregate: .sum)
+            .where(.date, .greaterThan, .date(.daysAgo(7)))
+            .groupBy(.day)
+            .execute()
+
+        // Result may be empty (no HealthKit data in test), but should not throw
+        #expect(result.executionTime >= 0)
+    }
+}
