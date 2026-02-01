@@ -10,11 +10,19 @@ public enum HealthSource: Equatable, Sendable {
 
 /// Fields that can be selected or used in predicates
 public enum Field: Equatable, Sendable {
-    case value      // The numeric value of a quantity sample
-    case date       // The start date of the sample
-    case endDate    // The end date of the sample
-    case source     // The source (app/device) of the sample
-    case device     // The device that recorded the sample
+    case value          // The numeric value of a quantity sample
+    case date           // The start date of the sample
+    case endDate        // The end date of the sample
+    case source         // The source (app/device) of the sample
+    case device         // The device that recorded the sample
+    // Category fields
+    case stage          // Sleep stage (for sleep_analysis)
+    case severity       // Severity level (for symptoms)
+    // Workout fields
+    case activityType   // Workout activity type
+    case duration       // Duration in seconds
+    case totalCalories  // Total energy burned
+    case distance       // Distance in meters
 }
 
 /// Aggregation functions
@@ -55,6 +63,7 @@ public enum PredicateValue: Equatable, Sendable {
     case string(String)
     case dateRange(start: Date, end: Date)
     case null
+    case categoryValue(Int)  // For category sample values (sleep stage, severity)
 }
 
 /// A condition for filtering results

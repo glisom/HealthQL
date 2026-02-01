@@ -66,4 +66,38 @@ struct IRTests {
             Issue.record("Expected sleepSession source")
         }
     }
+
+    @Test("PredicateValue supports categoryValue")
+    func predicateCategoryValue() {
+        let value = PredicateValue.categoryValue(3)
+        if case .categoryValue(let v) = value {
+            #expect(v == 3)
+        } else {
+            Issue.record("Expected categoryValue")
+        }
+    }
+
+    @Test("Field has stage for category queries")
+    func fieldStage() {
+        let field = Field.stage
+        #expect(field == .stage)
+    }
+
+    @Test("Field has activityType for workout queries")
+    func fieldActivityType() {
+        let field = Field.activityType
+        #expect(field == .activityType)
+    }
+
+    @Test("Field has duration")
+    func fieldDuration() {
+        let field = Field.duration
+        #expect(field == .duration)
+    }
+
+    @Test("Field has totalCalories")
+    func fieldTotalCalories() {
+        let field = Field.totalCalories
+        #expect(field == .totalCalories)
+    }
 }
