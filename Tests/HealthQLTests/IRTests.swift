@@ -36,4 +36,34 @@ struct IRTests {
         let weekGroup = GroupBy.week
         #expect(weekGroup == .week)
     }
+
+    @Test("HealthSource supports category type")
+    func healthSourceCategory() {
+        let source = HealthSource.category(.sleepAnalysis)
+        if case .category(let type) = source {
+            #expect(type == .sleepAnalysis)
+        } else {
+            Issue.record("Expected category source")
+        }
+    }
+
+    @Test("HealthSource supports workout")
+    func healthSourceWorkout() {
+        let source = HealthSource.workout
+        if case .workout = source {
+            // Pass
+        } else {
+            Issue.record("Expected workout source")
+        }
+    }
+
+    @Test("HealthSource supports sleep session")
+    func healthSourceSleepSession() {
+        let source = HealthSource.sleepSession
+        if case .sleepSession = source {
+            // Pass
+        } else {
+            Issue.record("Expected sleepSession source")
+        }
+    }
 }

@@ -3,9 +3,9 @@ import Foundation
 /// The source of data for a query
 public enum HealthSource: Equatable, Sendable {
     case quantity(QuantityType)
-    // Future: case category(CategoryType)
-    // Future: case workout
-    // Future: case clinicalRecord(ClinicalType)
+    case category(CategoryType)
+    case workout
+    case sleepSession
 }
 
 /// Fields that can be selected or used in predicates
