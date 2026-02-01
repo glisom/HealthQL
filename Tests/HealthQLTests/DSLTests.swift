@@ -80,3 +80,35 @@ struct DSLTests {
         #expect(query.limit == 7)
     }
 }
+
+@Suite("Date Convenience Tests")
+struct DateConvenienceTests {
+
+    @Test("DateReference.daysAgo calculates correctly")
+    func daysAgo() {
+        let reference = DateReference.daysAgo(7)
+        let expected = Calendar.current.date(byAdding: .day, value: -7, to: Calendar.current.startOfDay(for: Date()))!
+        let referenceDate = reference.date
+
+        // Compare to start of expected day
+        let referenceDay = Calendar.current.startOfDay(for: referenceDate)
+        #expect(referenceDay == expected)
+    }
+
+    @Test("DateReference.startOfMonth is first day of month")
+    func startOfMonth() {
+        let reference = DateReference.startOfMonth
+        let date = reference.date
+
+        let components = Calendar.current.dateComponents([.day], from: date)
+        #expect(components.day == 1)
+    }
+
+    @Test("DateReference.today is start of today")
+    func today() {
+        let reference = DateReference.today
+        let expected = Calendar.current.startOfDay(for: Date())
+
+        #expect(reference.date == expected)
+    }
+}
