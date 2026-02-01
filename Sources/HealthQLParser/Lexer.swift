@@ -19,9 +19,10 @@ public final class Lexer {
         "select": .select,
         "from": .from,
         "where": .where,
-        "group": .groupBy,  // Will combine with BY
+        "group": .group,
+        "by": .by,
         "having": .having,
-        "order": .orderBy,  // Will combine with BY
+        "order": .order,
         "limit": .limit,
         "asc": .asc,
         "desc": .desc,
@@ -30,7 +31,6 @@ public final class Lexer {
         "not": .not,
         "is": .is,
         "null": .null,
-        "by": .identifier,  // Handled specially after GROUP/ORDER
         "sum": .sum,
         "avg": .avg,
         "min": .min,
@@ -56,23 +56,6 @@ public final class Lexer {
             if isAtEnd { break }
 
             let token = try scanToken()
-
-            // Handle GROUP BY and ORDER BY as single tokens
-            if token.type == .groupBy || token.type == .orderBy {
-                try skipWhitespace()
-                if !isAtEnd {
-                    let next = try scanToken()
-                    if next.value.lowercased() == "by" {
-                        tokens.append(token)
-                        continue
-                    } else {
-                        tokens.append(token)
-                        tokens.append(next)
-                        continue
-                    }
-                }
-            }
-
             tokens.append(token)
         }
 

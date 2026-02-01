@@ -8,7 +8,8 @@ struct TokenTests {
     func tokenTypes() {
         // Keywords
         #expect(TokenType.select != TokenType.from)
-        #expect(TokenType.where != TokenType.groupBy)
+        #expect(TokenType.where != TokenType.group)
+        #expect(TokenType.group != TokenType.by)
 
         // Literals
         #expect(TokenType.identifier != TokenType.number)

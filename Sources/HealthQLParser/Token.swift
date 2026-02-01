@@ -6,9 +6,10 @@ public enum TokenType: Equatable, Sendable {
     case select
     case from
     case `where`
-    case groupBy
+    case group
+    case by
     case having
-    case orderBy
+    case order
     case limit
     case asc
     case desc
