@@ -8,17 +8,31 @@ public enum QueryError: Error, Equatable {
     case healthKitNotAvailable
     case authorizationDenied
     case invalidQuery(String)
+    case healthKitError(String)
 }
 
 /// Executes HealthQL queries against HealthKit
 public final class HealthQueryExecutor: Sendable {
     private let healthStore: HKHealthStore?
+    private let quantityHandler: QuantityQueryHandler?
+    private let categoryHandler: CategoryQueryHandler?
+    private let workoutHandler: WorkoutQueryHandler?
+    private let sleepSessionHandler: SleepSessionHandler?
 
     public init() {
         if HKHealthStore.isHealthDataAvailable() {
-            self.healthStore = HKHealthStore()
+            let store = HKHealthStore()
+            self.healthStore = store
+            self.quantityHandler = QuantityQueryHandler(healthStore: store)
+            self.categoryHandler = CategoryQueryHandler(healthStore: store)
+            self.workoutHandler = WorkoutQueryHandler(healthStore: store)
+            self.sleepSessionHandler = SleepSessionHandler(healthStore: store)
         } else {
             self.healthStore = nil
+            self.quantityHandler = nil
+            self.categoryHandler = nil
+            self.workoutHandler = nil
+            self.sleepSessionHandler = nil
         }
     }
 
@@ -27,14 +41,33 @@ public final class HealthQueryExecutor: Sendable {
         // Validate query
         try validate(query)
 
-        // For now, return empty result
-        // Real implementation will query HealthKit
+        // Check HealthKit availability
+        guard healthStore != nil else {
+            throw QueryError.healthKitNotAvailable
+        }
+
         let startTime = Date()
 
-        // TODO: Implement actual HealthKit query execution
+        // Dispatch to appropriate handler
+        let rows: [ResultRow]
+
+        do {
+            switch query.source {
+            case .quantity(let type):
+                rows = try await quantityHandler!.execute(query, type: type)
+            case .category(let type):
+                rows = try await categoryHandler!.execute(query, type: type)
+            case .workout:
+                rows = try await workoutHandler!.execute(query)
+            case .sleepSession:
+                rows = try await sleepSessionHandler!.execute(query)
+            }
+        } catch {
+            throw QueryError.healthKitError(error.localizedDescription)
+        }
 
         let executionTime = Date().timeIntervalSince(startTime)
-        return QueryResult(rows: [], executionTime: executionTime)
+        return QueryResult(rows: rows, executionTime: executionTime)
     }
 
     /// Validate a query before execution

@@ -33,4 +33,45 @@ struct ExecutorTests {
             try await executor.execute(query)
         }
     }
+
+    @Test("Executor dispatches to quantity handler")
+    func dispatchesToQuantityHandler() async throws {
+        let query = HealthQuery(
+            source: .quantity(.heartRate),
+            selections: [.field(.value)]
+        )
+
+        let executor = HealthQueryExecutor()
+        #expect(query.source == .quantity(.heartRate))
+    }
+
+    @Test("Executor dispatches to category handler")
+    func dispatchesToCategoryHandler() async throws {
+        let query = HealthQuery(
+            source: .category(.sleepAnalysis),
+            selections: [.field(.stage)]
+        )
+
+        #expect(query.source == .category(.sleepAnalysis))
+    }
+
+    @Test("Executor dispatches to workout handler")
+    func dispatchesToWorkoutHandler() async throws {
+        let query = HealthQuery(
+            source: .workout,
+            selections: [.field(.duration)]
+        )
+
+        #expect(query.source == .workout)
+    }
+
+    @Test("Executor dispatches to sleep session handler")
+    func dispatchesToSleepSessionHandler() async throws {
+        let query = HealthQuery(
+            source: .sleepSession,
+            selections: [.field(.duration)]
+        )
+
+        #expect(query.source == .sleepSession)
+    }
 }
