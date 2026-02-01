@@ -22,7 +22,7 @@ public struct Autocomplete: Sendable {
 
     private static let aggregates = ["sum(", "avg(", "min(", "max(", "count("]
 
-    private static let fields = ["value", "date", "end_date", "source", "device", "count"]
+    private static let fields = ["value", "date", "end_date", "source", "device", "stage", "severity", "activity_type", "duration", "total_calories", "distance", "*"]
 
     private static let timePeriods = ["hour", "day", "week", "month", "year"]
 
@@ -166,9 +166,14 @@ public struct Autocomplete: Sendable {
         }
     }
 
-    /// Get all available type names from QuantityType
+    /// Get all available type names from QuantityType, CategoryType, and WorkoutType
     private func getTypeNames() -> [String] {
-        QuantityType.allCases.map { $0.displayName }
+        var types: [String] = []
+        types.append(contentsOf: QuantityType.allCases.map { $0.displayName })
+        types.append(contentsOf: CategoryType.allCases.map { $0.displayName })
+        types.append(WorkoutType.tableName)
+        types.append("sleep")
+        return types
     }
 
     /// Tokenize the input text for analysis

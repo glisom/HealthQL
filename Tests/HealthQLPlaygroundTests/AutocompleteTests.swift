@@ -59,4 +59,28 @@ struct AutocompleteTests {
         let suggestions = autocomplete.suggest(for: "SELECT * FROM hea", cursorPosition: 17)
         #expect(suggestions.contains("heart_rate"))
     }
+
+    @Test("Suggests category types after FROM")
+    func categoryTypesAfterFrom() {
+        let autocomplete = Autocomplete()
+        let suggestions = autocomplete.suggest(for: "SELECT * FROM sleep", cursorPosition: 19)
+
+        #expect(suggestions.contains("sleep_analysis") || suggestions.contains("sleep"))
+    }
+
+    @Test("Suggests workouts after FROM")
+    func workoutsAfterFrom() {
+        let autocomplete = Autocomplete()
+        let suggestions = autocomplete.suggest(for: "SELECT * FROM work", cursorPosition: 18)
+
+        #expect(suggestions.contains("workouts"))
+    }
+
+    @Test("Suggests workout fields")
+    func workoutFields() {
+        let autocomplete = Autocomplete()
+        let suggestions = autocomplete.suggest(for: "SELECT dur", cursorPosition: 10)
+
+        #expect(suggestions.contains("duration"))
+    }
 }
