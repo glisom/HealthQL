@@ -15,14 +15,51 @@ public struct SchemaInfo: Sendable {
 
     /// Get all available type names
     public func allTypes() -> [String] {
-        QuantityType.allCases.map { $0.displayName }
+        var types: [String] = []
+
+        // Quantity types
+        types.append(contentsOf: QuantityType.allCases.map { $0.displayName })
+
+        // Category types
+        types.append(contentsOf: CategoryType.allCases.map { $0.displayName })
+
+        // Special tables
+        types.append(WorkoutType.tableName)  // "workouts"
+        types.append("sleep")                 // aggregated sleep sessions
+
+        return types.sorted()
     }
 
     /// Get schema for a specific type
     public func schema(for typeName: String) -> TypeSchema? {
-        // Try exact match first
+        // Special case: workouts
+        if typeName == WorkoutType.tableName {
+            return TypeSchema(
+                name: "workouts",
+                displayName: "workouts",
+                fields: ["activity_type", "start_date", "end_date", "duration", "total_calories", "distance", "source", "device"],
+                unit: "session"
+            )
+        }
+
+        // Special case: sleep sessions
+        if typeName == "sleep" {
+            return TypeSchema(
+                name: "sleep",
+                displayName: "sleep",
+                fields: ["start_date", "end_date", "duration", "in_bed_duration", "rem", "core", "deep", "awake"],
+                unit: "session"
+            )
+        }
+
+        // Try quantity type
         if let type = QuantityType.from(displayName: typeName) {
-            return typeSchema(for: type)
+            return quantitySchema(for: type)
+        }
+
+        // Try category type
+        if let type = CategoryType.from(displayName: typeName) {
+            return categorySchema(for: type)
         }
 
         // Try camelCase conversion
@@ -33,7 +70,7 @@ public struct SchemaInfo: Sendable {
             .joined()
 
         if let type = QuantityType(rawValue: camelCase) {
-            return typeSchema(for: type)
+            return quantitySchema(for: type)
         }
 
         return nil
@@ -45,7 +82,6 @@ public struct SchemaInfo: Sendable {
         let lowercased = typeName.lowercased()
 
         return allNames.filter { name in
-            // Simple similarity check: contains most characters or starts with same prefix
             let nameLC = name.lowercased()
             let commonPrefix = nameLC.commonPrefix(with: lowercased)
             let similarity = Double(commonPrefix.count) / Double(max(nameLC.count, lowercased.count))
@@ -54,12 +90,21 @@ public struct SchemaInfo: Sendable {
         }
     }
 
-    private func typeSchema(for type: QuantityType) -> TypeSchema {
+    private func quantitySchema(for type: QuantityType) -> TypeSchema {
         TypeSchema(
             name: type.rawValue,
             displayName: type.displayName,
             fields: ["value", "date", "end_date", "source", "device"],
             unit: type.defaultUnit.unitString
+        )
+    }
+
+    private func categorySchema(for type: CategoryType) -> TypeSchema {
+        TypeSchema(
+            name: type.rawValue,
+            displayName: type.displayName,
+            fields: type.availableFields,
+            unit: "category"
         )
     }
 
@@ -81,9 +126,9 @@ public struct SchemaInfo: Sendable {
             for j in 1...n {
                 let cost = s1Array[i-1] == s2Array[j-1] ? 0 : 1
                 matrix[i][j] = Swift.min(
-                    matrix[i-1][j] + 1,      // deletion
-                    matrix[i][j-1] + 1,      // insertion
-                    matrix[i-1][j-1] + cost  // substitution
+                    matrix[i-1][j] + 1,
+                    matrix[i][j-1] + 1,
+                    matrix[i-1][j-1] + cost
                 )
             }
         }
