@@ -168,7 +168,7 @@ public struct Autocomplete: Sendable {
 
     /// Get all available type names from QuantityType
     private func getTypeNames() -> [String] {
-        QuantityType.allCases.map { $0.rawValue }
+        QuantityType.allCases.map { $0.displayName }
     }
 
     /// Tokenize the input text for analysis

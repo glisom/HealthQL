@@ -52,4 +52,11 @@ struct AutocompleteTests {
         let suggestions = autocomplete.suggest(for: "SELECT * FROM steps WHERE date > to", cursorPosition: 35)
         #expect(suggestions.contains("today()"))
     }
+
+    @Test("Suggests heart_rate type after FROM")
+    func heartRateType() {
+        let autocomplete = Autocomplete()
+        let suggestions = autocomplete.suggest(for: "SELECT * FROM hea", cursorPosition: 17)
+        #expect(suggestions.contains("heart_rate"))
+    }
 }
