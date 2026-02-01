@@ -20,7 +20,7 @@ struct REPLView: View {
                     }
                     .padding()
                 }
-                .onChange(of: viewModel.outputLines.count) { _ in
+                .onChange(of: viewModel.outputLines.count) { _, _ in
                     if let lastLine = viewModel.outputLines.last {
                         proxy.scrollTo(lastLine.id, anchor: .bottom)
                     }
@@ -94,20 +94,15 @@ class REPLViewModel: ObservableObject {
         // Execute asynchronously
         Task {
             let result = await engine.execute(command)
-
-            await MainActor.run {
-                let isError = result.contains("Error") || result.contains("Unknown")
-                outputLines.append(OutputLine(text: result, isError: isError))
-            }
+            let isError = result.contains("Error") || result.contains("Unknown")
+            outputLines.append(OutputLine(text: result, isError: isError))
         }
     }
 
     func historyUp() {
         Task {
             if let previous = await engine.historyUp() {
-                await MainActor.run {
-                    inputText = previous
-                }
+                inputText = previous
             }
         }
     }
@@ -115,9 +110,7 @@ class REPLViewModel: ObservableObject {
     func historyDown() {
         Task {
             let next = await engine.historyDown()
-            await MainActor.run {
-                inputText = next ?? ""
-            }
+            inputText = next ?? ""
         }
     }
 }
