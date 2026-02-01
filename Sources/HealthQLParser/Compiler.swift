@@ -1,6 +1,11 @@
 import Foundation
 import HealthQL
 
+// Type aliases to disambiguate from Foundation/local AST types with same names
+private typealias IRPredicate = HealthQL.Predicate
+private typealias IROperator = HealthQL.Operator
+private typealias IROrderDirection = HealthQL.OrderDirection
+
 /// Errors that can occur during compilation
 public enum CompilerError: Error, Equatable {
     case unknownTable(String)
@@ -111,7 +116,7 @@ public final class Compiler: Sendable {
 
     // MARK: - WHERE Compilation
 
-    private func compileWhere(_ expr: Expression?) throws -> [HealthQL.Predicate] {
+    private func compileWhere(_ expr: Expression?) throws -> [IRPredicate] {
         guard let expr = expr else { return [] }
 
         // Handle AND at top level
@@ -126,20 +131,20 @@ public final class Compiler: Sendable {
             let field = try resolveFieldFromExpression(left)
             let irOp = try compileOperator(op)
             let value = try compileValue(right)
-            return [HealthQL.Predicate(field: field, op: irOp, value: value)]
+            return [IRPredicate(field: field, op: irOp, value: value)]
         }
 
         // IS NULL / IS NOT NULL
         if case .isNull(let inner, let negated) = expr {
             let field = try resolveFieldFromExpression(inner)
-            let op: HealthQL.Operator = negated ? .isNotNull : .isNull
-            return [HealthQL.Predicate(field: field, op: op, value: .null)]
+            let op: IROperator = negated ? .isNotNull : .isNull
+            return [IRPredicate(field: field, op: op, value: .null)]
         }
 
         throw CompilerError.invalidExpression("Unsupported WHERE expression")
     }
 
-    private func compileOperator(_ op: BinaryOperator) throws -> HealthQL.Operator {
+    private func compileOperator(_ op: BinaryOperator) throws -> IROperator {
         switch op {
         case .equal: return .equal
         case .notEqual: return .notEqual
@@ -244,7 +249,7 @@ public final class Compiler: Sendable {
 
         return try orderBy.map { item in
             let field = try resolveFieldFromExpression(item.expression)
-            let direction: HealthQL.OrderDirection = item.direction == .asc ? .ascending : .descending
+            let direction: IROrderDirection = item.direction == .asc ? .ascending : .descending
             return OrderBy(field: field, direction: direction)
         }
     }
