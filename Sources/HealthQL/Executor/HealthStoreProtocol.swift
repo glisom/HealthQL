@@ -33,6 +33,7 @@ extension HKHealthStore: HealthStoreProtocol {
 public final class MockHealthStore: HealthStoreProtocol, @unchecked Sendable {
     public var samples: [HKSample]
     public var error: Error?
+    public var queryError: Error?
     public var executedQueries: [HKQuery] = []
     public var authorizationRequested: Bool = false
 
@@ -43,6 +44,13 @@ public final class MockHealthStore: HealthStoreProtocol, @unchecked Sendable {
 
     public func execute(_ query: HKQuery) {
         executedQueries.append(query)
+
+        // Invoke completion handlers for statistics collection queries
+        if let statsQuery = query as? HKStatisticsCollectionQuery {
+            DispatchQueue.main.async { [weak self] in
+                statsQuery.initialResultsHandler?(statsQuery, nil, self?.queryError)
+            }
+        }
     }
 
     public func stop(_ query: HKQuery) {
