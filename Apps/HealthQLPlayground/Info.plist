@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+    <key>CFBundleName</key>
+    <string>HealthQL Playground</string>
+    <key>CFBundleIdentifier</key>
+    <string>com.healthql.playground</string>
+    <key>CFBundleVersion</key>
+    <string>1.0</string>
+    <key>CFBundleShortVersionString</key>
+    <string>1.0</string>
+    <key>NSHealthShareUsageDescription</key>
+    <string>HealthQL needs access to your health data to run queries.</string>
+    <key>NSHealthUpdateUsageDescription</key>
+    <string>HealthQL does not write any health data.</string>
+</dict>
+</plist>
