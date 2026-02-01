@@ -24,12 +24,16 @@ struct ASTTests {
     func aggregateExpression() {
         let expr = Expression.aggregate(.sum, .identifier("value"))
 
-        if case .aggregate(let fn, let inner) = expr {
-            #expect(fn == .sum)
-            if case .identifier(let name) = inner {
-                #expect(name == "value")
-            }
+        guard case .aggregate(let fn, let inner) = expr else {
+            Issue.record("Expected aggregate expression")
+            return
         }
+        #expect(fn == .sum)
+        guard case .identifier(let name) = inner else {
+            Issue.record("Expected identifier in aggregate")
+            return
+        }
+        #expect(name == "value")
     }
 
     @Test("Expression can represent date arithmetic")
@@ -40,8 +44,18 @@ struct ASTTests {
             .duration(7, .days)
         )
 
-        if case .binary(_, let op, _) = expr {
-            #expect(op == .minus)
+        guard case .binary(let left, let op, let right) = expr else {
+            Issue.record("Expected binary expression")
+            return
+        }
+        #expect(op == .minus)
+        guard case .function(.today, _) = left else {
+            Issue.record("Expected today function on left")
+            return
+        }
+        guard case .duration(7, .days) = right else {
+            Issue.record("Expected 7 day duration on right")
+            return
         }
     }
 }

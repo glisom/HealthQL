@@ -41,6 +41,12 @@ public enum BinaryOperator: Equatable, Sendable {
     case or
 }
 
+/// Unary operators
+public enum UnaryOperator: Equatable, Sendable {
+    case not
+    case negative
+}
+
 /// Order direction
 public enum OrderDirection: Equatable, Sendable {
     case asc
@@ -57,7 +63,7 @@ public indirect enum Expression: Equatable, Sendable {
     case aggregate(AggregateFunction, Expression)
     case function(DateFunction, [Expression])
     case binary(Expression, BinaryOperator, Expression)
-    case unary(BinaryOperator, Expression)  // NOT, negative
+    case unary(UnaryOperator, Expression)
     case isNull(Expression, negated: Bool)
     case star  // SELECT *
 }
