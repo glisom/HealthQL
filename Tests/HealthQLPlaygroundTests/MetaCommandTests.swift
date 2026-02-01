@@ -52,4 +52,25 @@ struct MetaCommandTests {
 
         #expect(result == .unknown(".invalid"))
     }
+
+    @Test("Parses .export csv command")
+    func exportCsvCommand() {
+        let result = MetaCommand.parse(".export csv")
+
+        #expect(result == .export(.csv))
+    }
+
+    @Test("Parses .export json command")
+    func exportJsonCommand() {
+        let result = MetaCommand.parse(".export json")
+
+        #expect(result == .export(.json))
+    }
+
+    @Test("Export defaults to CSV when no format specified")
+    func exportDefaultsCsv() {
+        let result = MetaCommand.parse(".export")
+
+        #expect(result == .export(.csv))
+    }
 }
