@@ -23,6 +23,12 @@ public enum Field: Equatable, Sendable {
     case duration       // Duration in seconds
     case totalCalories  // Total energy burned
     case distance       // Distance in meters
+    // Sleep session fields
+    case inBedDuration  // Time spent in bed
+    case remDuration    // Time spent in REM sleep
+    case coreDuration   // Time spent in core sleep
+    case deepDuration   // Time spent in deep sleep
+    case awakeDuration  // Time spent awake during sleep
 }
 
 /// Aggregation functions

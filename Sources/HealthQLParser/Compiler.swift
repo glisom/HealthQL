@@ -121,6 +121,12 @@ public final class Compiler: Sendable {
         case "duration": return .duration
         case "total_calories": return .totalCalories
         case "distance": return .distance
+        // Sleep session fields
+        case "in_bed_duration": return .inBedDuration
+        case "rem": return .remDuration
+        case "core": return .coreDuration
+        case "deep": return .deepDuration
+        case "awake": return .awakeDuration
         default:
             throw CompilerError.unknownField(name)
         }
