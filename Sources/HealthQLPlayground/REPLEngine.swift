@@ -3,11 +3,16 @@ import HealthQL
 import HealthQLParser
 
 /// Core REPL engine that processes commands and queries
-public final class REPLEngine: @unchecked Sendable {
+public actor REPLEngine {
     public private(set) var history = History()
     private let formatter = ResultFormatter()
     private let schemaInfo = SchemaInfo()
     private var lastResult: QueryResult?
+    // ISO8601DateFormatter is thread-safe for formatting operations
+    private nonisolated(unsafe) static let isoDateFormatter: ISO8601DateFormatter = {
+        let formatter = ISO8601DateFormatter()
+        return formatter
+    }()
 
     public init() {}
 
@@ -155,8 +160,7 @@ public final class REPLEngine: @unchecked Sendable {
                 case .int(let i): return "\(i)"
                 case .string(let s): return "\"\(s)\""
                 case .date(let d):
-                    let formatter = ISO8601DateFormatter()
-                    return formatter.string(from: d)
+                    return REPLEngine.isoDateFormatter.string(from: d)
                 case .null: return ""
                 }
             }
@@ -176,7 +180,7 @@ public final class REPLEngine: @unchecked Sendable {
                 case .double(let d): obj[key] = d
                 case .int(let i): obj[key] = i
                 case .string(let s): obj[key] = s
-                case .date(let d): obj[key] = ISO8601DateFormatter().string(from: d)
+                case .date(let d): obj[key] = REPLEngine.isoDateFormatter.string(from: d)
                 case .null: obj[key] = NSNull()
                 }
             }
@@ -214,8 +218,8 @@ public final class REPLEngine: @unchecked Sendable {
         case .unknownTable(let name):
             let suggestions = schemaInfo.suggest(for: name)
             var output = "Error: Unknown type '\(name)'."
-            if !suggestions.isEmpty {
-                output += " Did you mean '\(suggestions.first!)'?"
+            if let firstSuggestion = suggestions.first {
+                output += " Did you mean '\(firstSuggestion)'?"
             }
             return output
         case .unknownField(let name):
