@@ -16,6 +16,10 @@ let package = Package(
             name: "HealthQLParser",
             targets: ["HealthQLParser"]
         ),
+        .library(
+            name: "HealthQLPlayground",
+            targets: ["HealthQLPlayground"]
+        ),
     ],
     targets: [
         .target(
@@ -28,6 +32,10 @@ let package = Package(
             name: "HealthQLParser",
             dependencies: ["HealthQL"]
         ),
+        .target(
+            name: "HealthQLPlayground",
+            dependencies: ["HealthQL", "HealthQLParser"]
+        ),
         .testTarget(
             name: "HealthQLTests",
             dependencies: ["HealthQL"]
@@ -35,6 +43,10 @@ let package = Package(
         .testTarget(
             name: "HealthQLParserTests",
             dependencies: ["HealthQLParser"]
+        ),
+        .testTarget(
+            name: "HealthQLPlaygroundTests",
+            dependencies: ["HealthQLPlayground"]
         ),
     ]
 )
