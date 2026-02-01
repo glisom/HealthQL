@@ -41,12 +41,27 @@ public final class Compiler: Sendable {
     // MARK: - Source Resolution
 
     private func resolveSource(_ tableName: String) throws -> HealthSource {
+        // Special case: "workouts" table
+        if tableName == WorkoutType.tableName {
+            return .workout
+        }
+
+        // Special case: "sleep" for aggregated sleep sessions
+        if tableName == "sleep" {
+            return .sleepSession
+        }
+
         // Try to find matching QuantityType by display name
         if let quantityType = QuantityType.from(displayName: tableName) {
             return .quantity(quantityType)
         }
 
-        // Try camelCase conversion (heart_rate -> heartRate)
+        // Try to find matching CategoryType by display name
+        if let categoryType = CategoryType.from(displayName: tableName) {
+            return .category(categoryType)
+        }
+
+        // Try camelCase conversion for QuantityType
         let camelCase = tableName
             .split(separator: "_")
             .enumerated()

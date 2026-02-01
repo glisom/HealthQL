@@ -280,6 +280,90 @@ struct CompilerOrderByTests {
     }
 }
 
+@Suite("Compiler Source Resolution Tests")
+struct CompilerSourceResolutionTests {
+
+    @Test("Compiler resolves sleep_analysis to category source")
+    func compileSleepAnalysis() throws {
+        let stmt = SelectStatement(
+            selections: [.star],
+            from: "sleep_analysis",
+            whereClause: nil,
+            groupBy: nil,
+            orderBy: nil,
+            limit: nil
+        )
+        let compiler = Compiler()
+        let query = try compiler.compile(stmt)
+
+        if case .category(let type) = query.source {
+            #expect(type == .sleepAnalysis)
+        } else {
+            Issue.record("Expected category source")
+        }
+    }
+
+    @Test("Compiler resolves workouts to workout source")
+    func compileWorkouts() throws {
+        let stmt = SelectStatement(
+            selections: [.star],
+            from: "workouts",
+            whereClause: nil,
+            groupBy: nil,
+            orderBy: nil,
+            limit: nil
+        )
+        let compiler = Compiler()
+        let query = try compiler.compile(stmt)
+
+        if case .workout = query.source {
+            // Pass
+        } else {
+            Issue.record("Expected workout source")
+        }
+    }
+
+    @Test("Compiler resolves sleep to sleepSession source")
+    func compileSleepSession() throws {
+        let stmt = SelectStatement(
+            selections: [.star],
+            from: "sleep",
+            whereClause: nil,
+            groupBy: nil,
+            orderBy: nil,
+            limit: nil
+        )
+        let compiler = Compiler()
+        let query = try compiler.compile(stmt)
+
+        if case .sleepSession = query.source {
+            // Pass
+        } else {
+            Issue.record("Expected sleepSession source")
+        }
+    }
+
+    @Test("Compiler resolves headache to category source")
+    func compileHeadache() throws {
+        let stmt = SelectStatement(
+            selections: [.star],
+            from: "headache",
+            whereClause: nil,
+            groupBy: nil,
+            orderBy: nil,
+            limit: nil
+        )
+        let compiler = Compiler()
+        let query = try compiler.compile(stmt)
+
+        if case .category(let type) = query.source {
+            #expect(type == .headache)
+        } else {
+            Issue.record("Expected category source")
+        }
+    }
+}
+
 @Suite("Compiler Error Tests")
 struct CompilerErrorTests {
 
