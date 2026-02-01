@@ -12,6 +12,10 @@ let package = Package(
             name: "HealthQL",
             targets: ["HealthQL"]
         ),
+        .library(
+            name: "HealthQLParser",
+            targets: ["HealthQLParser"]
+        ),
     ],
     targets: [
         .target(
@@ -20,9 +24,17 @@ let package = Package(
                 .linkedFramework("HealthKit")
             ]
         ),
+        .target(
+            name: "HealthQLParser",
+            dependencies: ["HealthQL"]
+        ),
         .testTarget(
             name: "HealthQLTests",
             dependencies: ["HealthQL"]
+        ),
+        .testTarget(
+            name: "HealthQLParserTests",
+            dependencies: ["HealthQLParser"]
         ),
     ]
 )
