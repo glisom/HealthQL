@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>HealthQL - SQL for HealthKit</title>
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+  <meta name="description" content="A SQL-like query language for Apple HealthKit">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>💓</text></svg>">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/docsify-themeable@0/dist/css/theme-simple.css">
+  <style>
+    :root {
+      --theme-color: #FF2D55;
+      --sidebar-name-color: #FF2D55;
+      --sidebar-nav-link-color--active: #FF2D55;
+      --sidebar-nav-link-border-color--active: #FF2D55;
+      --link-color: #FF2D55;
+      --blockquote-border-color: #FF2D55;
+      --code-theme-background: #1a1a2e;
+      --code-theme-text: #eee;
+    }
+
+    .sidebar-nav > ul > li > a {
+      font-weight: 600;
+    }
+
+    .markdown-section code {
+      border-radius: 4px;
+      padding: 2px 6px;
+    }
+
+    .markdown-section pre > code {
+      padding: 1em;
+    }
+
+    .cover-main {
+      background: linear-gradient(135deg, #667eea 0%, #FF2D55 100%) !important;
+    }
+
+    .cover-main h1 {
+      font-size: 3rem;
+    }
+
+    .cover-main blockquote {
+      font-size: 1.2rem;
+    }
+
+    table {
+      width: 100%;
+    }
+
+    th {
+      background: #f8f8f8;
+    }
+  </style>
+</head>
+<body>
+  <div id="app"></div>
+  <script>
+    window.$docsify = {
+      name: 'HealthQL',
+      repo: 'https://github.com/glisom/HealthQL',
+      loadSidebar: true,
+      subMaxLevel: 3,
+      auto2top: true,
+      coverpage: true,
+      search: {
+        placeholder: 'Search docs...',
+        noData: 'No results',
+        depth: 3
+      },
+      copyCode: {
+        buttonText: 'Copy',
+        successText: 'Copied!'
+      },
+      tabs: {
+        persist: true,
+        sync: true,
+        theme: 'classic'
+      },
+      pagination: {
+        previousText: 'Previous',
+        nextText: 'Next',
+        crossChapter: true
+      }
+    }
+  </script>
+  <!-- Docsify -->
+  <script src="https://cdn.jsdelivr.net/npm/docsify@4/lib/docsify.min.js"></script>
+  <!-- Plugins -->
+  <script src="https://cdn.jsdelivr.net/npm/docsify@4/lib/plugins/search.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/docsify-copy-code@2"></script>
+  <script src="https://cdn.jsdelivr.net/npm/docsify-pagination@2/dist/docsify-pagination.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/docsify-tabs@1"></script>
+  <!-- Syntax highlighting -->
+  <script src="https://cdn.jsdelivr.net/npm/prismjs@1/components/prism-swift.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/prismjs@1/components/prism-sql.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/prismjs@1/components/prism-bash.min.js"></script>
+</body>
+</html>

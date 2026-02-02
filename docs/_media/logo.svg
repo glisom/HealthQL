@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 60" fill="none">
+  <!-- Heart icon representing health -->
+  <path d="M25 20 C15 10, 5 20, 5 28 C5 40, 25 50, 25 50 C25 50, 45 40, 45 28 C45 20, 35 10, 25 20"
+        fill="#FF3B30" opacity="0.9"/>
+
+  <!-- Heartbeat line through the heart -->
+  <path d="M8 30 L18 30 L21 22 L25 38 L29 22 L32 30 L42 30"
+        stroke="white" stroke-width="2.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+
+  <!-- HealthQL text -->
+  <text x="55" y="38" font-family="-apple-system, BlinkMacSystemFont, 'SF Pro Display', sans-serif"
+        font-size="28" font-weight="600" fill="#1C1C1E">
+    Health<tspan fill="#FF3B30">QL</tspan>
+  </text>
+</svg>
