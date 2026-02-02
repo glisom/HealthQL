@@ -1,0 +1,357 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 63;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		129D42016130E7C768BEF6C5 /* HealthQLAppApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EF5227974D33122E7C20F87 /* HealthQLAppApp.swift */; };
+		3A065F2DE9A6749C4041EBDF /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4A71F0C26E8F10CC35C8D35 /* ContentView.swift */; };
+		58B2D0E24C9AEC2A0C26A264 /* HealthQL in Frameworks */ = {isa = PBXBuildFile; productRef = 70AB87D243D5A445D6FDC9EF /* HealthQL */; };
+		8598E24B94C5BFD4F4A41E2B /* HealthQLPlayground in Frameworks */ = {isa = PBXBuildFile; productRef = 27FBF72643BE82D37F348BD1 /* HealthQLPlayground */; };
+		CCB2DB4E02208BF5360470DE /* HealthQLParser in Frameworks */ = {isa = PBXBuildFile; productRef = E4CA03711B6503CCBF306709 /* HealthQLParser */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		2EF5227974D33122E7C20F87 /* HealthQLAppApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HealthQLAppApp.swift; sourceTree = "<group>"; };
+		68BF2DB8FC3EDCF30AA72155 /* HealthQLApp.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = HealthQLApp.entitlements; sourceTree = "<group>"; };
+		B59B4DAFF8461ACB662FD0EB /* HealthQL */ = {isa = PBXFileReference; lastKnownFileType = folder; name = HealthQL; path = ..; sourceTree = SOURCE_ROOT; };
+		C3D82BB4497777308AFFDA57 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
+		E4A71F0C26E8F10CC35C8D35 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
+		E8DB9E986FDA6BBD91DDF3A8 /* HealthQLApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = HealthQLApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		3BE53773B317FBC8C1835208 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				58B2D0E24C9AEC2A0C26A264 /* HealthQL in Frameworks */,
+				CCB2DB4E02208BF5360470DE /* HealthQLParser in Frameworks */,
+				8598E24B94C5BFD4F4A41E2B /* HealthQLPlayground in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		17A51560F96B16FE60D926C4 = {
+			isa = PBXGroup;
+			children = (
+				6F6D9DFC3E296F3B31C8531B /* HealthQLApp */,
+				5180F8DFAFED6FDBBFA3D5E0 /* Packages */,
+				790605A940C68297D0CECBFA /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		5180F8DFAFED6FDBBFA3D5E0 /* Packages */ = {
+			isa = PBXGroup;
+			children = (
+				B59B4DAFF8461ACB662FD0EB /* HealthQL */,
+			);
+			name = Packages;
+			sourceTree = "<group>";
+		};
+		6F6D9DFC3E296F3B31C8531B /* HealthQLApp */ = {
+			isa = PBXGroup;
+			children = (
+				E4A71F0C26E8F10CC35C8D35 /* ContentView.swift */,
+				68BF2DB8FC3EDCF30AA72155 /* HealthQLApp.entitlements */,
+				2EF5227974D33122E7C20F87 /* HealthQLAppApp.swift */,
+				C3D82BB4497777308AFFDA57 /* Info.plist */,
+			);
+			path = HealthQLApp;
+			sourceTree = "<group>";
+		};
+		790605A940C68297D0CECBFA /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				E8DB9E986FDA6BBD91DDF3A8 /* HealthQLApp.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		4E35844ACC8D18DFF009CC93 /* HealthQLApp */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 5F54B746E1E8D44CB08AFFD0 /* Build configuration list for PBXNativeTarget "HealthQLApp" */;
+			buildPhases = (
+				C97C43240C1B968E01BA2239 /* Sources */,
+				3BE53773B317FBC8C1835208 /* Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = HealthQLApp;
+			packageProductDependencies = (
+				70AB87D243D5A445D6FDC9EF /* HealthQL */,
+				E4CA03711B6503CCBF306709 /* HealthQLParser */,
+				27FBF72643BE82D37F348BD1 /* HealthQLPlayground */,
+			);
+			productName = HealthQLApp;
+			productReference = E8DB9E986FDA6BBD91DDF3A8 /* HealthQLApp.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		62A56C56C1C2D44400DD31B0 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = YES;
+				LastUpgradeCheck = 1500;
+				TargetAttributes = {
+					4E35844ACC8D18DFF009CC93 = {
+						ProvisioningStyle = Automatic;
+					};
+				};
+			};
+			buildConfigurationList = 39160172A793D342A361B23B /* Build configuration list for PBXProject "HealthQLApp" */;
+			compatibilityVersion = "Xcode 14.0";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				Base,
+				en,
+			);
+			mainGroup = 17A51560F96B16FE60D926C4;
+			minimizedProjectReferenceProxies = 1;
+			packageReferences = (
+				4DE9BBA9721B61218ABC822F /* XCLocalSwiftPackageReference ".." */,
+			);
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				4E35844ACC8D18DFF009CC93 /* HealthQLApp */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXSourcesBuildPhase section */
+		C97C43240C1B968E01BA2239 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				3A065F2DE9A6749C4041EBDF /* ContentView.swift in Sources */,
+				129D42016130E7C768BEF6C5 /* HealthQLAppApp.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin XCBuildConfiguration section */
+		1A0C93D9D1EB05CA572410B7 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				SWIFT_VERSION = 5.0;
+			};
+			name = Release;
+		};
+		48A0CD89E363167A1D19A5FF /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = HealthQLApp/HealthQLApp.entitlements;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 3D247B7547;
+				INFOPLIST_FILE = HealthQLApp/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = "HealthQL Demo";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 0.1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.healthql.app;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		6BE659F2879A30D225EEAB2F /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					"DEBUG=1",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 5.0;
+			};
+			name = Debug;
+		};
+		F0F2E93C57E08E29D5619F58 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = HealthQLApp/HealthQLApp.entitlements;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 3D247B7547;
+				INFOPLIST_FILE = HealthQLApp/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = "HealthQL Demo";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 0.1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.healthql.app;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		39160172A793D342A361B23B /* Build configuration list for PBXProject "HealthQLApp" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				6BE659F2879A30D225EEAB2F /* Debug */,
+				1A0C93D9D1EB05CA572410B7 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+		5F54B746E1E8D44CB08AFFD0 /* Build configuration list for PBXNativeTarget "HealthQLApp" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				48A0CD89E363167A1D19A5FF /* Debug */,
+				F0F2E93C57E08E29D5619F58 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+/* End XCConfigurationList section */
+
+/* Begin XCLocalSwiftPackageReference section */
+		4DE9BBA9721B61218ABC822F /* XCLocalSwiftPackageReference ".." */ = {
+			isa = XCLocalSwiftPackageReference;
+			relativePath = ..;
+		};
+/* End XCLocalSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		27FBF72643BE82D37F348BD1 /* HealthQLPlayground */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = HealthQLPlayground;
+		};
+		70AB87D243D5A445D6FDC9EF /* HealthQL */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = HealthQL;
+		};
+		E4CA03711B6503CCBF306709 /* HealthQLParser */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = HealthQLParser;
+		};
+/* End XCSwiftPackageProductDependency section */
+	};
+	rootObject = 62A56C56C1C2D44400DD31B0 /* Project object */;
+}

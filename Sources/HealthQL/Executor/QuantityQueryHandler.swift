@@ -70,6 +70,9 @@ public actor QuantityQueryHandler {
         let interval = dateComponents(for: grouping)
         let anchorDate = Calendar.current.startOfDay(for: Date())
 
+        // Extract start date from predicates, default to 30 days ago
+        let startDate = extractStartDate(from: query.predicates) ?? Calendar.current.date(byAdding: .day, value: -30, to: Date())!
+
         let options = statisticsOptions(for: query.selections)
 
         return try await withCheckedThrowingContinuation { continuation in
@@ -87,7 +90,7 @@ public actor QuantityQueryHandler {
                     return
                 }
 
-                let rows = self.transformStatistics(results, type: type, selections: query.selections)
+                let rows = self.transformStatistics(results, type: type, selections: query.selections, startDate: startDate)
                 continuation.resume(returning: rows)
             }
 
@@ -119,6 +122,22 @@ public actor QuantityQueryHandler {
         case .month: return DateComponents(month: 1)
         case .year: return DateComponents(year: 1)
         }
+    }
+
+    private func extractStartDate(from predicates: [Predicate]) -> Date? {
+        for predicate in predicates {
+            if predicate.field == .date {
+                switch predicate.value {
+                case .date(let date):
+                    return date
+                case .dateRange(let start, _):
+                    return start
+                default:
+                    continue
+                }
+            }
+        }
+        return nil
     }
 
     private func statisticsOptions(for selections: [Selection]) -> HKStatisticsOptions {
@@ -171,13 +190,13 @@ public actor QuantityQueryHandler {
         }
     }
 
-    private nonisolated func transformStatistics(_ collection: HKStatisticsCollection?, type: QuantityType, selections: [Selection]) -> [ResultRow] {
+    private nonisolated func transformStatistics(_ collection: HKStatisticsCollection?, type: QuantityType, selections: [Selection], startDate: Date) -> [ResultRow] {
         guard let collection = collection else { return [] }
 
         var rows: [ResultRow] = []
         let unit = type.defaultUnit
 
-        collection.enumerateStatistics(from: Date.distantPast, to: Date()) { statistics, _ in
+        collection.enumerateStatistics(from: startDate, to: Date()) { statistics, _ in
             var values: [String: ResultValue] = [:]
             values["date"] = .date(statistics.startDate)
 
