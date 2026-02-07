@@ -13,6 +13,7 @@ GROUP BY day
 
 - **SQL-like Syntax** - Query HealthKit with familiar SELECT, FROM, WHERE, GROUP BY, ORDER BY, LIMIT
 - **Type-safe Swift DSL** - Fluent API for building queries programmatically
+- **React Native / Expo Support** - Use HealthQL in React Native apps with full TypeScript types
 - **18 Quantity Types** - Heart rate, steps, calories, distance, weight, and more
 - **5 Category Types** - Sleep analysis, headache, fatigue, appetite, menstrual flow
 - **Workouts & Sleep Sessions** - Query exercise data and aggregated sleep metrics
@@ -21,6 +22,36 @@ GROUP BY day
 - **Full Predicate Support** - All comparison operators, AND, IS NULL, IS NOT NULL
 
 ## Installation
+
+### React Native / Expo
+
+```bash
+npm install react-native-healthql
+```
+
+Add the config plugin to your `app.json`:
+
+```json
+{
+  "expo": {
+    "plugins": [
+      [
+        "react-native-healthql",
+        {
+          "healthShareUsageDescription": "Read health data to display insights"
+        }
+      ]
+    ]
+  }
+}
+```
+
+Then rebuild your app:
+
+```bash
+npx expo prebuild --clean
+npx expo run:ios
+```
 
 ### Swift Package Manager
 
@@ -44,9 +75,37 @@ Then add the products you need:
 )
 ```
 
+### CocoaPods
+
+```ruby
+pod 'HealthQL', '~> 0.1.0'
+```
+
 ## Quick Start
 
-### SQL String Queries
+### React Native / TypeScript
+
+```typescript
+import { HealthQL } from 'react-native-healthql';
+
+// Request authorization first
+await HealthQL.requestAuthorization({
+  read: ['heart_rate', 'steps', 'sleep_analysis'],
+});
+
+// Execute a SQL query
+const results = await HealthQL.query(`
+  SELECT avg(value) FROM heart_rate
+  WHERE date > today() - 7d
+  GROUP BY day
+`);
+
+results.forEach(row => {
+  console.log(`${row.date}: ${row.avg_value} bpm`);
+});
+```
+
+### Swift - SQL String Queries
 
 ```swift
 import HealthQL

@@ -1,5 +1,67 @@
 # Installation
 
+## React Native / Expo
+
+### Install the package
+
+```bash
+npm install react-native-healthql
+# or
+yarn add react-native-healthql
+```
+
+### Add the Expo config plugin
+
+In your `app.json` or `app.config.js`:
+
+```json
+{
+  "expo": {
+    "plugins": [
+      [
+        "react-native-healthql",
+        {
+          "healthShareUsageDescription": "Read health data to display insights"
+        }
+      ]
+    ]
+  }
+}
+```
+
+### Rebuild your app
+
+```bash
+npx expo prebuild --clean
+npx expo run:ios
+```
+
+> **Note:** HealthQL only supports iOS. On Android, API calls will throw a `PLATFORM_NOT_SUPPORTED` error.
+
+### Request Authorization
+
+Before querying health data, request user authorization:
+
+```typescript
+import { HealthQL } from 'react-native-healthql';
+
+await HealthQL.requestAuthorization({
+  read: ['heart_rate', 'steps', 'sleep_analysis', 'workouts'],
+});
+```
+
+### Execute Queries
+
+```typescript
+const results = await HealthQL.query(`
+  SELECT avg(value) FROM heart_rate
+  WHERE date > today() - 7d
+  GROUP BY day
+`);
+```
+
+---
+
 ## Swift Package Manager
 
 ### Xcode
@@ -37,6 +99,22 @@ targets: [
     )
 ]
 ```
+
+## CocoaPods
+
+Add to your `Podfile`:
+
+```ruby
+pod 'HealthQL', '~> 0.1.0'
+```
+
+Then run:
+
+```bash
+pod install
+```
+
+---
 
 ## HealthKit Setup
 

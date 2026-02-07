@@ -2,6 +2,8 @@
 
 SQL-like query language for Apple HealthKit in React Native and Expo.
 
+Part of the [HealthQL](https://github.com/glisom/HealthQL) project - see [full documentation](https://glisom.github.io/HealthQL/).
+
 ## Installation
 
 ```bash

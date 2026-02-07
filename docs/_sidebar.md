@@ -11,6 +11,10 @@
   - [Date Functions](date-functions.md)
   - [Operators](operators.md)
 
+- React Native
+  - [Getting Started](react-native.md)
+  - [TypeScript API](react-native-api.md)
+
 - Health Types
   - [Quantity Types](quantity-types.md)
   - [Category Types](category-types.md)
