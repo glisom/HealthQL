@@ -105,7 +105,7 @@ targets: [
 Add to your `Podfile`:
 
 ```ruby
-pod 'HealthQL', '~> 0.1.0'
+pod 'HealthQL', '~> 1.1.0'
 ```
 
 Then run:

@@ -1,6 +1,6 @@
 {
   "name": "react-native-healthql",
-  "version": "0.1.0",
+  "version": "1.1.0",
   "description": "SQL-like query language for Apple HealthKit in React Native",
   "main": "build/index.js",
   "types": "build/index.d.ts",
@@ -25,16 +25,16 @@
     "sql",
     "ios"
   ],
-  "author": "",
+  "author": "Grant Isom <glisom@icloud.com>",
   "license": "MIT",
-  "homepage": "https://github.com/anthropics/healthql#readme",
+  "homepage": "https://github.com/glisom/HealthQL#readme",
   "repository": {
     "type": "git",
-    "url": "https://github.com/anthropics/healthql.git",
+    "url": "https://github.com/glisom/HealthQL.git",
     "directory": "packages/react-native-healthql"
   },
   "bugs": {
-    "url": "https://github.com/anthropics/healthql/issues"
+    "url": "https://github.com/glisom/HealthQL/issues"
   },
   "peerDependencies": {
     "expo": ">=49.0.0",

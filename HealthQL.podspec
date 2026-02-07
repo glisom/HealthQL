@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name             = 'HealthQL'
-  s.version          = '0.1.0'
+  s.version          = '1.1.0'
   s.summary          = 'SQL-like query interface for Apple HealthKit'
   s.description      = <<-DESC
     HealthQL provides a SQL-like query interface for Apple HealthKit data.
