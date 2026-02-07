@@ -47,8 +47,8 @@ public enum UnaryOperator: Equatable, Sendable {
     case negative
 }
 
-/// Order direction
-public enum OrderDirection: Equatable, Sendable {
+/// Order direction for AST (separate from IR.OrderDirection to avoid collision in CocoaPods)
+public enum ASTOrderDirection: Equatable, Sendable {
     case asc
     case desc
 }
@@ -71,9 +71,9 @@ public indirect enum Expression: Equatable, Sendable {
 /// ORDER BY clause item
 public struct OrderByItem: Equatable, Sendable {
     public let expression: Expression
-    public let direction: OrderDirection
+    public let direction: ASTOrderDirection
 
-    public init(expression: Expression, direction: OrderDirection = .asc) {
+    public init(expression: Expression, direction: ASTOrderDirection = .asc) {
         self.expression = expression
         self.direction = direction
     }

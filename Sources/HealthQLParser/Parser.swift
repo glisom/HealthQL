@@ -170,7 +170,7 @@ public final class Parser {
 
         repeat {
             let expr = try parseExpression()
-            var direction: OrderDirection = .asc
+            var direction: ASTOrderDirection = .asc
             if match(.asc) {
                 direction = .asc
             } else if match(.desc) {

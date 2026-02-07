@@ -1,0 +1,30 @@
+{
+  "expo": {
+    "name": "HealthQL Example",
+    "slug": "healthql-example",
+    "version": "1.0.0",
+    "orientation": "portrait",
+        "scheme": "healthql-example",
+    "userInterfaceStyle": "automatic",
+    "newArchEnabled": true,
+    "ios": {
+      "supportsTablet": true,
+      "bundleIdentifier": "com.healthql.example"
+    },
+    "plugins": [
+      "expo-router",
+      [
+        "react-native-healthql",
+        {
+          "healthShareUsageDescription": "HealthQL Example uses your health data to demonstrate SQL-like queries against HealthKit."
+        }
+      ]
+    ],
+    "experiments": {
+      "typedRoutes": true
+    },
+    "android": {
+      "package": "com.healthql.example"
+    }
+  }
+}

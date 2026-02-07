@@ -1,8 +1,20 @@
 .DS_Store
 /.build
-/Packages
 xcuserdata/
 DerivedData/
 .swiftpm/configuration/registries.json
 .swiftpm/xcode/package.xcworkspace/contents.xcworkspacedata
 .netrc
+
+# React Native / Node
+node_modules/
+*.log
+
+# Expo
+.expo/
+
+# Build outputs
+packages/*/build/
+packages/*/plugin/build/
+packages/*/example/ios/Pods/
+packages/*/example/ios/build/
