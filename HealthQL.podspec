@@ -9,7 +9,7 @@ Pod::Spec.new do |s|
   s.homepage         = 'https://github.com/glisom/HealthQL'
   s.license          = { :type => 'MIT', :file => 'LICENSE' }
   s.author           = { 'Grant Isom' => 'glisom@icloud.com' }
-  s.source           = { :git => 'https://github.com/glisom/HealthQL.git', :tag => s.version.to_s }
+  s.source           = { :git => 'https://github.com/glisom/HealthQL.git', :tag => "v#{s.version}" }
 
   s.ios.deployment_target = '15.0'
   s.swift_version = '5.9'
