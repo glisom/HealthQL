@@ -1,0 +1,150 @@
+name: Release
+
+on:
+  workflow_dispatch:
+    inputs:
+      version:
+        description: 'Version number (e.g., 1.3.0)'
+        required: true
+        type: string
+      release_type:
+        description: 'Type of release'
+        required: true
+        type: choice
+        options:
+          - minor
+          - patch
+          - major
+        default: minor
+
+permissions:
+  contents: write
+
+jobs:
+  release:
+    runs-on: macos-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Configure Git
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+
+      - name: Validate version format
+        run: |
+          if ! [[ "${{ inputs.version }}" =~ ^[0-9]+\.[0-9]+\.[0-9]+$ ]]; then
+            echo "Error: Version must be in format X.Y.Z (e.g., 1.3.0)"
+            exit 1
+          fi
+
+      - name: Check version doesn't exist
+        run: |
+          if git tag | grep -q "^v${{ inputs.version }}$"; then
+            echo "Error: Tag v${{ inputs.version }} already exists"
+            exit 1
+          fi
+
+      - name: Get previous version
+        id: prev_version
+        run: |
+          PREV=$(git describe --tags --abbrev=0 2>/dev/null || echo "v0.0.0")
+          echo "version=${PREV#v}" >> $GITHUB_OUTPUT
+          echo "Previous version: $PREV"
+
+      - name: Update version in files
+        run: |
+          VERSION="${{ inputs.version }}"
+
+          # Update HealthQL.podspec
+          sed -i '' "s/s.version          = '[^']*'/s.version          = '$VERSION'/" HealthQL.podspec
+
+          # Update package.json
+          sed -i '' "s/\"version\": \"[^\"]*\"/\"version\": \"$VERSION\"/" packages/react-native-healthql/package.json
+
+          echo "Updated versions to $VERSION"
+
+      - name: Generate changelog entry
+        id: changelog
+        run: |
+          VERSION="${{ inputs.version }}"
+          PREV_TAG="v${{ steps.prev_version.outputs.version }}"
+          DATE=$(date +%Y-%m-%d)
+
+          # Get commits since last tag
+          echo "## [$VERSION] - $DATE" > /tmp/new_changelog.md
+          echo "" >> /tmp/new_changelog.md
+
+          # Group commits by type
+          echo "### Changes" >> /tmp/new_changelog.md
+          echo "" >> /tmp/new_changelog.md
+
+          git log ${PREV_TAG}..HEAD --pretty=format:"- %s" --no-merges | while read line; do
+            echo "$line" >> /tmp/new_changelog.md
+          done
+
+          echo "" >> /tmp/new_changelog.md
+
+          # Show what will be added
+          cat /tmp/new_changelog.md
+
+      - name: Update changelog file
+        run: |
+          # Insert new changelog entry after the header
+          head -7 docs/changelog.md > /tmp/changelog_header.md
+          tail -n +8 docs/changelog.md > /tmp/changelog_body.md
+
+          cat /tmp/changelog_header.md > docs/changelog.md
+          echo "" >> docs/changelog.md
+          cat /tmp/new_changelog.md >> docs/changelog.md
+          cat /tmp/changelog_body.md >> docs/changelog.md
+
+      - name: Commit changes
+        run: |
+          git add HealthQL.podspec packages/react-native-healthql/package.json docs/changelog.md
+          git commit -m "chore: bump versions to ${{ inputs.version }} for release"
+
+      - name: Create and push tag
+        run: |
+          git tag -a "v${{ inputs.version }}" -m "Release v${{ inputs.version }}"
+          git push origin main
+          git push origin "v${{ inputs.version }}"
+
+      - name: Generate release notes
+        id: release_notes
+        run: |
+          VERSION="${{ inputs.version }}"
+          PREV_TAG="v${{ steps.prev_version.outputs.version }}"
+
+          {
+            echo "## What's Changed"
+            echo ""
+            git log ${PREV_TAG}..HEAD~1 --pretty=format:"- %s" --no-merges
+            echo ""
+            echo ""
+            echo "**Full Changelog**: https://github.com/${{ github.repository }}/compare/${PREV_TAG}...v${VERSION}"
+          } > /tmp/release_notes.md
+
+          cat /tmp/release_notes.md
+
+      - name: Create GitHub Release
+        uses: softprops/action-gh-release@v1
+        with:
+          tag_name: v${{ inputs.version }}
+          name: v${{ inputs.version }}
+          body_path: /tmp/release_notes.md
+          draft: false
+          prerelease: false
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Summary
+        run: |
+          echo "## Release v${{ inputs.version }} created successfully!" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "- Tag: v${{ inputs.version }}" >> $GITHUB_STEP_SUMMARY
+          echo "- Release: https://github.com/${{ github.repository }}/releases/tag/v${{ inputs.version }}" >> $GITHUB_STEP_SUMMARY
