@@ -98,7 +98,7 @@ public actor QuantityQueryHandler {
         }
     }
 
-    private func buildSortDescriptors(from ordering: [OrderBy]?) -> [NSSortDescriptor] {
+    internal nonisolated func buildSortDescriptors(from ordering: [OrderBy]?) -> [NSSortDescriptor] {
         guard let ordering = ordering else {
             return [NSSortDescriptor(key: HKSampleSortIdentifierStartDate, ascending: false)]
         }
@@ -114,7 +114,7 @@ public actor QuantityQueryHandler {
         }
     }
 
-    private func dateComponents(for grouping: GroupBy) -> DateComponents {
+    internal nonisolated func dateComponents(for grouping: GroupBy) -> DateComponents {
         switch grouping {
         case .hour: return DateComponents(hour: 1)
         case .day: return DateComponents(day: 1)
@@ -124,7 +124,7 @@ public actor QuantityQueryHandler {
         }
     }
 
-    private func extractStartDate(from predicates: [Predicate]) -> Date? {
+    internal nonisolated func extractStartDate(from predicates: [Predicate]) -> Date? {
         for predicate in predicates {
             if predicate.field == .date {
                 switch predicate.value {
@@ -140,7 +140,7 @@ public actor QuantityQueryHandler {
         return nil
     }
 
-    private func statisticsOptions(for selections: [Selection]) -> HKStatisticsOptions {
+    internal nonisolated func statisticsOptions(for selections: [Selection]) -> HKStatisticsOptions {
         var options: HKStatisticsOptions = []
 
         for selection in selections {
