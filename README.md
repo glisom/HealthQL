@@ -21,6 +21,8 @@ GROUP BY day
 - **Aggregations** - SUM, AVG, MIN, MAX, COUNT with GROUP BY support
 - **Full Predicate Support** - All comparison operators, AND, IS NULL, IS NOT NULL
 
+> **Expanding Coverage**: We're working toward full HealthKit SDK support. See our [Roadmap](docs/roadmap.md) for nutrition, symptoms, and 70+ additional workout types coming soon.
+
 ## Installation
 
 ### React Native / Expo

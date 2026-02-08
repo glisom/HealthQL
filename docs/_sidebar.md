@@ -26,5 +26,6 @@
   - [Examples](examples.md)
 
 - More
+  - [Roadmap](roadmap.md)
   - [Contributing](contributing.md)
   - [Changelog](changelog.md)
