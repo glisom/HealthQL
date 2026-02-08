@@ -5,6 +5,41 @@ All notable changes to HealthQL will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.2.0] - 2026-02-08
+
+### Added
+
+- **15 New Quantity Types** (Phase 4: Extended Vitals & Fitness)
+  - Vitals: `resting_heart_rate`, `walking_heart_rate_average`, `basal_body_temperature`, `peripheral_perfusion_index`, `electrodermal_activity`, `blood_alcohol_content`
+  - Fitness: `vo2_max`, `distance_swimming`, `swimming_stroke_count`, `distance_wheelchair`, `push_count`, `distance_downhill_snow_sports`
+  - Body: `lean_body_mass`, `body_mass_index`, `waist_circumference`
+
+- **HealthKit Coverage Roadmap**
+  - Documentation outlining 8-phase plan to full HealthKit SDK coverage
+  - See [docs/roadmap.md](roadmap.md) for details
+
+### Improved
+
+- **Test Coverage**
+  - Added comprehensive tests for QuantityQueryHandler helper methods
+  - Added compiler tests for all new quantity types
+  - Total tests: 326 (up from ~275)
+
+### Technical Details
+
+- Quantity type coverage: 18 → 33 types (22% → 41% of HealthKit)
+- All new types fully integrated with SQL compiler
+
+## [1.1.0] - 2026-02-07
+
+### Added
+
+- **React Native / Expo Support**
+  - New `react-native-healthql` npm package
+  - Expo config plugin for automatic HealthKit setup
+  - Full TypeScript types
+  - Background delivery support
+
 ## [1.0.0] - 2025-01-31
 
 ### Added
