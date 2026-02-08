@@ -22,6 +22,27 @@ public enum QuantityType: String, CaseIterable, Sendable {
     case bloodPressureDiastolic
     case bloodGlucose
 
+    // Phase 4: Extended Vitals
+    case restingHeartRate
+    case walkingHeartRateAverage
+    case basalBodyTemperature
+    case peripheralPerfusionIndex
+    case electrodermalActivity
+    case bloodAlcoholContent
+
+    // Phase 4: Fitness Metrics
+    case vo2Max
+    case distanceSwimming
+    case swimmingStrokeCount
+    case distanceWheelchair
+    case pushCount
+    case distanceDownhillSnowSports
+
+    // Phase 4: Body Measurements
+    case leanBodyMass
+    case bodyMassIndex
+    case waistCircumference
+
     /// The HealthKit identifier for this quantity type
     public var identifier: HKQuantityTypeIdentifier {
         switch self {
@@ -43,6 +64,24 @@ public enum QuantityType: String, CaseIterable, Sendable {
         case .bloodPressureSystolic: return .bloodPressureSystolic
         case .bloodPressureDiastolic: return .bloodPressureDiastolic
         case .bloodGlucose: return .bloodGlucose
+        // Phase 4: Extended Vitals
+        case .restingHeartRate: return .restingHeartRate
+        case .walkingHeartRateAverage: return .walkingHeartRateAverage
+        case .basalBodyTemperature: return .basalBodyTemperature
+        case .peripheralPerfusionIndex: return .peripheralPerfusionIndex
+        case .electrodermalActivity: return .electrodermalActivity
+        case .bloodAlcoholContent: return .bloodAlcoholContent
+        // Phase 4: Fitness Metrics
+        case .vo2Max: return .vo2Max
+        case .distanceSwimming: return .distanceSwimming
+        case .swimmingStrokeCount: return .swimmingStrokeCount
+        case .distanceWheelchair: return .distanceWheelchair
+        case .pushCount: return .pushCount
+        case .distanceDownhillSnowSports: return .distanceDownhillSnowSports
+        // Phase 4: Body Measurements
+        case .leanBodyMass: return .leanBodyMass
+        case .bodyMassIndex: return .bodyMassIndex
+        case .waistCircumference: return .waistCircumference
         }
     }
 
@@ -72,6 +111,24 @@ public enum QuantityType: String, CaseIterable, Sendable {
         case .bloodPressureSystolic: return "blood_pressure_systolic"
         case .bloodPressureDiastolic: return "blood_pressure_diastolic"
         case .bloodGlucose: return "blood_glucose"
+        // Phase 4: Extended Vitals
+        case .restingHeartRate: return "resting_heart_rate"
+        case .walkingHeartRateAverage: return "walking_heart_rate_average"
+        case .basalBodyTemperature: return "basal_body_temperature"
+        case .peripheralPerfusionIndex: return "peripheral_perfusion_index"
+        case .electrodermalActivity: return "electrodermal_activity"
+        case .bloodAlcoholContent: return "blood_alcohol_content"
+        // Phase 4: Fitness Metrics
+        case .vo2Max: return "vo2_max"
+        case .distanceSwimming: return "distance_swimming"
+        case .swimmingStrokeCount: return "swimming_stroke_count"
+        case .distanceWheelchair: return "distance_wheelchair"
+        case .pushCount: return "push_count"
+        case .distanceDownhillSnowSports: return "distance_downhill_snow_sports"
+        // Phase 4: Body Measurements
+        case .leanBodyMass: return "lean_body_mass"
+        case .bodyMassIndex: return "body_mass_index"
+        case .waistCircumference: return "waist_circumference"
         }
     }
 
@@ -92,6 +149,20 @@ public enum QuantityType: String, CaseIterable, Sendable {
         case .bodyTemperature: return .degreeCelsius()
         case .bloodPressureSystolic, .bloodPressureDiastolic: return .millimeterOfMercury()
         case .bloodGlucose: return HKUnit.gramUnit(with: .milli).unitDivided(by: .literUnit(with: .deci))
+        // Phase 4: Extended Vitals
+        case .restingHeartRate, .walkingHeartRateAverage: return HKUnit.count().unitDivided(by: .minute())
+        case .basalBodyTemperature: return .degreeCelsius()
+        case .peripheralPerfusionIndex: return .percent()
+        case .electrodermalActivity: return .siemen()
+        case .bloodAlcoholContent: return .percent()
+        // Phase 4: Fitness Metrics
+        case .vo2Max: return HKUnit.literUnit(with: .milli).unitDivided(by: .gramUnit(with: .kilo).unitMultiplied(by: .minute()))
+        case .distanceSwimming, .distanceWheelchair, .distanceDownhillSnowSports: return .meter()
+        case .swimmingStrokeCount, .pushCount: return .count()
+        // Phase 4: Body Measurements
+        case .leanBodyMass: return .gramUnit(with: .kilo)
+        case .bodyMassIndex: return .count()
+        case .waistCircumference: return .meter()
         }
     }
 

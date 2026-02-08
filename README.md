@@ -14,7 +14,7 @@ GROUP BY day
 - **SQL-like Syntax** - Query HealthKit with familiar SELECT, FROM, WHERE, GROUP BY, ORDER BY, LIMIT
 - **Type-safe Swift DSL** - Fluent API for building queries programmatically
 - **React Native / Expo Support** - Use HealthQL in React Native apps with full TypeScript types
-- **18 Quantity Types** - Heart rate, steps, calories, distance, weight, and more
+- **33 Quantity Types** - Heart rate, steps, calories, VO2 max, swimming, and more
 - **5 Category Types** - Sleep analysis, headache, fatigue, appetite, menstrual flow
 - **Workouts & Sleep Sessions** - Query exercise data and aggregated sleep metrics
 - **Date Functions** - `today()`, `start_of_week()`, `start_of_month()`, `start_of_year()`
@@ -140,26 +140,23 @@ let result = try await Health.select(.steps, aggregate: .sum)
 
 ### Quantity Types
 
+33 quantity types including:
+
 | Type | SQL Name | Unit |
 |------|----------|------|
 | Heart Rate | `heart_rate` | bpm |
+| Resting Heart Rate | `resting_heart_rate` | bpm |
 | Steps | `steps` | count |
 | Active Calories | `active_calories` | kcal |
-| Resting Calories | `resting_calories` | kcal |
 | Distance | `distance` | m |
-| Flights Climbed | `flights_climbed` | count |
-| Stand Time | `stand_time` | min |
-| Exercise Minutes | `exercise_minutes` | min |
+| VO2 Max | `vo2_max` | mL/(kg·min) |
 | Body Mass | `body_mass` | kg |
-| Height | `height` | m |
-| Body Fat % | `body_fat_percentage` | % |
-| HRV | `heart_rate_variability` | ms |
+| Body Mass Index | `body_mass_index` | - |
 | Blood Oxygen | `oxygen_saturation` | % |
-| Respiratory Rate | `respiratory_rate` | /min |
-| Body Temperature | `body_temperature` | °C |
-| Blood Pressure (Sys) | `blood_pressure_systolic` | mmHg |
-| Blood Pressure (Dia) | `blood_pressure_diastolic` | mmHg |
+| Blood Pressure | `blood_pressure_systolic` | mmHg |
 | Blood Glucose | `blood_glucose` | mg/dL |
+
+[See all 33 quantity types →](docs/quantity-types.md)
 
 ### Category Types
 
