@@ -459,3 +459,92 @@ struct CompilerErrorTests {
         }
     }
 }
+
+// MARK: - Phase 4 Quantity Types Compiler Tests
+
+@Suite("Phase 4 Quantity Types Compiler Tests")
+struct Phase4CompilerTests {
+
+    @Test("Compiler resolves vo2_max to quantity source")
+    func vo2Max() throws {
+        let stmt = SelectStatement(
+            selections: [.star],
+            from: "vo2_max"
+        )
+
+        let compiler = Compiler()
+        let query = try compiler.compile(stmt)
+
+        #expect(query.source == .quantity(.vo2Max))
+    }
+
+    @Test("Compiler resolves resting_heart_rate to quantity source")
+    func restingHeartRate() throws {
+        let stmt = SelectStatement(
+            selections: [.identifier("value")],
+            from: "resting_heart_rate"
+        )
+
+        let compiler = Compiler()
+        let query = try compiler.compile(stmt)
+
+        #expect(query.source == .quantity(.restingHeartRate))
+    }
+
+    @Test("Compiler resolves body_mass_index to quantity source")
+    func bodyMassIndex() throws {
+        let stmt = SelectStatement(
+            selections: [.aggregate(.avg, .identifier("value"))],
+            from: "body_mass_index"
+        )
+
+        let compiler = Compiler()
+        let query = try compiler.compile(stmt)
+
+        #expect(query.source == .quantity(.bodyMassIndex))
+    }
+
+    @Test("Compiler resolves distance_swimming to quantity source")
+    func distanceSwimming() throws {
+        let stmt = SelectStatement(
+            selections: [.aggregate(.sum, .identifier("value"))],
+            from: "distance_swimming",
+            groupBy: .timePeriod(.day)
+        )
+
+        let compiler = Compiler()
+        let query = try compiler.compile(stmt)
+
+        #expect(query.source == .quantity(.distanceSwimming))
+        #expect(query.grouping == .day)
+    }
+
+    @Test("All Phase 4 quantity types are recognized")
+    func allPhase4Types() throws {
+        let phase4Types = [
+            ("resting_heart_rate", QuantityType.restingHeartRate),
+            ("walking_heart_rate_average", QuantityType.walkingHeartRateAverage),
+            ("basal_body_temperature", QuantityType.basalBodyTemperature),
+            ("peripheral_perfusion_index", QuantityType.peripheralPerfusionIndex),
+            ("electrodermal_activity", QuantityType.electrodermalActivity),
+            ("blood_alcohol_content", QuantityType.bloodAlcoholContent),
+            ("vo2_max", QuantityType.vo2Max),
+            ("distance_swimming", QuantityType.distanceSwimming),
+            ("swimming_stroke_count", QuantityType.swimmingStrokeCount),
+            ("distance_wheelchair", QuantityType.distanceWheelchair),
+            ("push_count", QuantityType.pushCount),
+            ("distance_downhill_snow_sports", QuantityType.distanceDownhillSnowSports),
+            ("lean_body_mass", QuantityType.leanBodyMass),
+            ("body_mass_index", QuantityType.bodyMassIndex),
+            ("waist_circumference", QuantityType.waistCircumference),
+        ]
+
+        let compiler = Compiler()
+
+        for (sqlName, expectedType) in phase4Types {
+            let stmt = SelectStatement(selections: [.star], from: sqlName)
+            let query = try compiler.compile(stmt)
+            #expect(query.source == .quantity(expectedType), "Failed for \(sqlName)")
+        }
+    }
+}
