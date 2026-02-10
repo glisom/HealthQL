@@ -29,7 +29,8 @@ GROUP BY day
 | **5 Category Types** | Sleep, headache, fatigue, appetite, menstrual |
 | **Workouts** | Exercise sessions with duration, calories, type |
 | **Sleep Sessions** | Aggregated nightly sleep with stage breakdown |
-| **Date Functions** | today(), start_of_week/month/year() |
+| **Date Functions** | today(), start_of_week/month/year(), date literals |
+| **BETWEEN Operator** | `WHERE date BETWEEN '...' AND '...'` |
 | **Aggregations** | SUM, AVG, MIN, MAX, COUNT |
 
 ## Quick Start

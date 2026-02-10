@@ -5,6 +5,23 @@ All notable changes to HealthQL will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.3.0] - 2026-02-10
+
+### Added
+
+- **Custom Date/Time Literals** ([#1](https://github.com/glisom/HealthQL/issues/1))
+  - Date literals: `'2026-02-05'`
+  - Datetime literals: `'2026-02-05 16:00'`, `'2026-02-05 16:30:45'`
+  - Strings matching date formats are automatically parsed as dates in WHERE clauses
+
+- **BETWEEN Operator** for SQL queries
+  - `WHERE date BETWEEN '2026-02-05 16:00' AND '2026-02-05 17:00'`
+  - Works with date literals, date functions, and numeric values
+  - Compiles to `HKQuery.predicateForSamples(withStart:end:)` for optimal HealthKit performance
+
+- **Hour Duration Unit** (`h`)
+  - `WHERE date > today() - 4h` for sub-day relative queries
+  - `DateReference.hoursAgo(Int)` in the Swift DSL
 
 ## [1.2.1] - 2026-02-10
 

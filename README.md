@@ -18,8 +18,10 @@ GROUP BY day
 - **5 Category Types** - Sleep analysis, headache, fatigue, appetite, menstrual flow
 - **Workouts & Sleep Sessions** - Query exercise data and aggregated sleep metrics
 - **Date Functions** - `today()`, `start_of_week()`, `start_of_month()`, `start_of_year()`
+- **Custom Date/Time Literals** - Query specific dates and times with `'YYYY-MM-DD HH:mm'` syntax
+- **BETWEEN Operator** - `WHERE date BETWEEN '2026-02-05 16:00' AND '2026-02-05 17:00'`
 - **Aggregations** - SUM, AVG, MIN, MAX, COUNT with GROUP BY support
-- **Full Predicate Support** - All comparison operators, AND, IS NULL, IS NOT NULL
+- **Full Predicate Support** - All comparison operators, AND, BETWEEN, IS NULL, IS NOT NULL
 
 > **Expanding Coverage**: We're working toward full HealthKit SDK support. See our [Roadmap](docs/roadmap.md) for nutrition, symptoms, and 70+ additional workout types coming soon.
 
@@ -252,12 +254,16 @@ SELECT * FROM heart_rate WHERE device IS NOT NULL
 
 | Unit | Syntax | Example |
 |------|--------|---------|
+| Hours | `h` | `4h` |
 | Days | `d` | `7d` |
 | Weeks | `w` | `4w` |
 | Months | `mo` | `3mo` |
 | Years | `y` | `1y` |
 
 ```sql
+-- Last 4 hours
+WHERE date > today() - 4h
+
 -- Last 7 days
 WHERE date > today() - 7d
 
@@ -266,6 +272,31 @@ WHERE date > today() - 4w
 
 -- Last 3 months
 WHERE date > today() - 3mo
+```
+
+### Custom Date/Time Literals
+
+You can use date and datetime string literals for precise time range queries:
+
+| Format | Example |
+|--------|---------|
+| Date only | `'2026-02-05'` |
+| Date + time | `'2026-02-05 16:00'` |
+| Date + time + seconds | `'2026-02-05 16:30:45'` |
+
+```sql
+-- Active calories for a specific hour
+SELECT sum(value) FROM active_calories
+WHERE date BETWEEN '2026-02-05 16:00' AND '2026-02-05 17:00'
+
+-- Steps on a specific date
+SELECT sum(value) FROM steps
+WHERE date > '2026-02-05' AND date < '2026-02-06'
+
+-- Heart rate for a specific date range
+SELECT avg(value), min(value), max(value) FROM heart_rate
+WHERE date BETWEEN '2026-01-15' AND '2026-01-22'
+GROUP BY day
 ```
 
 ## Architecture

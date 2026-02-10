@@ -242,6 +242,12 @@ public final class Parser {
             _ = try consume(.null, message: "NULL")
             return .isNull(left, negated: negated)
         }
+        if match(.between) {
+            let low = try parseAddition()
+            _ = try consume(.and, message: "AND after BETWEEN")
+            let high = try parseAddition()
+            return .between(left, low, high)
+        }
 
         return left
     }
@@ -349,7 +355,7 @@ public final class Parser {
     }
 
     private func parseDuration(_ value: String) throws -> Expression {
-        // Parse "7d", "2w", "3mo", "1y"
+        // Parse "2h", "7d", "2w", "3mo", "1y"
         var numStr = ""
         var unitStr = ""
 
@@ -367,6 +373,7 @@ public final class Parser {
 
         let unit: DurationUnit
         switch unitStr {
+        case "h": unit = .hours
         case "d": unit = .days
         case "w": unit = .weeks
         case "mo": unit = .months

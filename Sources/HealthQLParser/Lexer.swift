@@ -28,6 +28,7 @@ public final class Lexer {
         "desc": .desc,
         "and": .and,
         "or": .or,
+        "between": .between,
         "not": .not,
         "is": .is,
         "null": .null,

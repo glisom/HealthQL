@@ -263,6 +263,51 @@ struct LexerTests {
         #expect(tokens[2].type == .identifier)
     }
 
+    // MARK: - BETWEEN Keyword Tests
+
+    @Test("Lexer tokenizes BETWEEN keyword")
+    func betweenKeyword() throws {
+        let lexer = Lexer("date BETWEEN '2026-02-05' AND '2026-02-06'")
+        let tokens = try lexer.tokenize()
+
+        #expect(tokens[0].type == .identifier)
+        #expect(tokens[0].value == "date")
+        #expect(tokens[1].type == .between)
+        #expect(tokens[2].type == .string)
+        #expect(tokens[2].value == "2026-02-05")
+        #expect(tokens[3].type == .and)
+        #expect(tokens[4].type == .string)
+        #expect(tokens[4].value == "2026-02-06")
+    }
+
+    @Test("Lexer tokenizes BETWEEN case insensitively")
+    func betweenCaseInsensitive() throws {
+        let lexer = Lexer("between")
+        let tokens = try lexer.tokenize()
+
+        #expect(tokens[0].type == .between)
+    }
+
+    // MARK: - Hour Duration Tests
+
+    @Test("Lexer tokenizes hour duration")
+    func hourDuration() throws {
+        let lexer = Lexer("2h")
+        let tokens = try lexer.tokenize()
+
+        #expect(tokens[0].type == .duration)
+        #expect(tokens[0].value == "2h")
+    }
+
+    @Test("Lexer tokenizes hour duration in WHERE clause")
+    func hourDurationInWhereClause() throws {
+        let lexer = Lexer("WHERE date > today() - 4h")
+        let tokens = try lexer.tokenize()
+
+        #expect(tokens[5].type == .duration)
+        #expect(tokens[5].value == "4h")
+    }
+
     // MARK: - Error Cases
 
     @Test("Lexer throws error for unexpected character")

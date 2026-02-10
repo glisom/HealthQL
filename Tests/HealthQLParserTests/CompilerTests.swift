@@ -428,6 +428,169 @@ struct CompilerFieldResolutionTests {
     }
 }
 
+@Suite("Compiler Date/Time Literal Tests")
+struct CompilerDateTimeLiteralTests {
+
+    @Test("Compiler parses date string literal as date value")
+    func dateStringLiteral() throws {
+        let stmt = SelectStatement(
+            selections: [.star],
+            from: "steps",
+            whereClause: .binary(
+                .identifier("date"),
+                .greaterThan,
+                .string("2026-02-05")
+            )
+        )
+
+        let compiler = Compiler()
+        let query = try compiler.compile(stmt)
+
+        #expect(query.predicates.count == 1)
+        #expect(query.predicates[0].field == .date)
+        #expect(query.predicates[0].op == .greaterThan)
+        if case .date = query.predicates[0].value {
+            // Success - string was parsed as a date
+        } else {
+            Issue.record("Expected date value from date string literal")
+        }
+    }
+
+    @Test("Compiler parses datetime string literal with time")
+    func datetimeStringLiteral() throws {
+        let stmt = SelectStatement(
+            selections: [.star],
+            from: "active_calories",
+            whereClause: .binary(
+                .identifier("date"),
+                .greaterThan,
+                .string("2026-02-05 16:00")
+            )
+        )
+
+        let compiler = Compiler()
+        let query = try compiler.compile(stmt)
+
+        #expect(query.predicates.count == 1)
+        if case .date = query.predicates[0].value {
+            // Success
+        } else {
+            Issue.record("Expected date value from datetime string literal")
+        }
+    }
+
+    @Test("Compiler parses datetime string literal with seconds")
+    func datetimeWithSeconds() throws {
+        let stmt = SelectStatement(
+            selections: [.star],
+            from: "heart_rate",
+            whereClause: .binary(
+                .identifier("date"),
+                .greaterThan,
+                .string("2026-02-05 16:30:45")
+            )
+        )
+
+        let compiler = Compiler()
+        let query = try compiler.compile(stmt)
+
+        if case .date = query.predicates[0].value {
+            // Success
+        } else {
+            Issue.record("Expected date value from datetime with seconds")
+        }
+    }
+
+    @Test("Compiler keeps non-date string as string value")
+    func nonDateString() throws {
+        let stmt = SelectStatement(
+            selections: [.star],
+            from: "heart_rate",
+            whereClause: .binary(
+                .identifier("source"),
+                .equal,
+                .string("Apple Watch")
+            )
+        )
+
+        let compiler = Compiler()
+        let query = try compiler.compile(stmt)
+
+        #expect(query.predicates[0].value == .string("Apple Watch"))
+    }
+
+    @Test("Compiler handles BETWEEN with date strings")
+    func betweenDateStrings() throws {
+        let stmt = SelectStatement(
+            selections: [.aggregate(.sum, .identifier("value"))],
+            from: "active_calories",
+            whereClause: .between(
+                .identifier("date"),
+                .string("2026-02-05 16:00"),
+                .string("2026-02-05 17:00")
+            )
+        )
+
+        let compiler = Compiler()
+        let query = try compiler.compile(stmt)
+
+        #expect(query.predicates.count == 1)
+        #expect(query.predicates[0].op == .between)
+        if case .dateRange = query.predicates[0].value {
+            // Success
+        } else {
+            Issue.record("Expected dateRange value for BETWEEN")
+        }
+    }
+
+    @Test("Compiler handles BETWEEN with date functions")
+    func betweenDateFunctions() throws {
+        let stmt = SelectStatement(
+            selections: [.star],
+            from: "steps",
+            whereClause: .between(
+                .identifier("date"),
+                .binary(.function(.today, []), .minus, .duration(7, .days)),
+                .function(.today, [])
+            )
+        )
+
+        let compiler = Compiler()
+        let query = try compiler.compile(stmt)
+
+        #expect(query.predicates.count == 1)
+        #expect(query.predicates[0].op == .between)
+        if case .dateRange = query.predicates[0].value {
+            // Success
+        } else {
+            Issue.record("Expected dateRange value for BETWEEN with functions")
+        }
+    }
+
+    @Test("Compiler handles hour duration")
+    func hourDuration() throws {
+        let stmt = SelectStatement(
+            selections: [.star],
+            from: "heart_rate",
+            whereClause: .binary(
+                .identifier("date"),
+                .greaterThan,
+                .binary(.function(.today, []), .minus, .duration(4, .hours))
+            )
+        )
+
+        let compiler = Compiler()
+        let query = try compiler.compile(stmt)
+
+        #expect(query.predicates.count == 1)
+        if case .date = query.predicates[0].value {
+            // Success
+        } else {
+            Issue.record("Expected date value from hour duration")
+        }
+    }
+}
+
 @Suite("Compiler Error Tests")
 struct CompilerErrorTests {
 

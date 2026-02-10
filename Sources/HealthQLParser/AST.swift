@@ -19,6 +19,7 @@ public enum DateFunction: Equatable, Sendable {
 
 /// Duration units
 public enum DurationUnit: String, Equatable, Sendable {
+    case hours = "h"
     case days = "d"
     case weeks = "w"
     case months = "mo"
@@ -65,6 +66,7 @@ public indirect enum Expression: Equatable, Sendable {
     case binary(Expression, BinaryOperator, Expression)
     case unary(UnaryOperator, Expression)
     case isNull(Expression, negated: Bool)
+    case between(Expression, Expression, Expression)  // expr BETWEEN low AND high
     case star  // SELECT *
 }
 
