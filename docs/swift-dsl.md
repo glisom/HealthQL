@@ -120,10 +120,14 @@ let result = try await Health.select(.heartRate)
 
 ```swift
 DateReference.today           // Start of today
+DateReference.hoursAgo(4)     // 4 hours ago
 DateReference.daysAgo(7)      // 7 days ago
+DateReference.weeksAgo(4)     // 4 weeks ago
+DateReference.monthsAgo(3)    // 3 months ago
 DateReference.startOfWeek     // Start of current week
 DateReference.startOfMonth    // Start of current month
 DateReference.startOfYear     // Start of current year
+DateReference.exact(someDate) // Specific Date object
 ```
 
 ## Operators
@@ -135,6 +139,7 @@ Operator.greaterThan
 Operator.greaterThanOrEqual
 Operator.lessThan
 Operator.lessThanOrEqual
+Operator.between
 Operator.isNull
 Operator.isNotNull
 ```

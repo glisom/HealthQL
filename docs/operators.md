@@ -32,6 +32,25 @@ WHERE value >= 60
 WHERE value <= 100
 ```
 
+## Range Operators
+
+| Operator | SQL | Description |
+|----------|-----|-------------|
+| Between | `BETWEEN ... AND ...` | Value within range (inclusive) |
+
+### Examples
+
+```sql
+-- Date range with datetime literals
+WHERE date BETWEEN '2026-02-05 16:00' AND '2026-02-05 17:00'
+
+-- Date range with functions
+WHERE date BETWEEN today() - 7d AND today()
+
+-- Numeric range
+WHERE value BETWEEN 60 AND 100
+```
+
 ## NULL Operators
 
 | Operator | Description |
@@ -75,7 +94,10 @@ WHERE date > start_of_month() AND value >= 50 AND device IS NOT NULL
 ```sql
 WHERE date > today()
 WHERE date > today() - 7d
+WHERE date > today() - 4h
 WHERE date > start_of_month()
+WHERE date > '2026-02-05'
+WHERE date BETWEEN '2026-02-05 16:00' AND '2026-02-05 17:00'
 ```
 
 ### Numeric Fields
@@ -103,6 +125,7 @@ Operator.greaterThan        // >
 Operator.greaterThanOrEqual // >=
 Operator.lessThan           // <
 Operator.lessThanOrEqual    // <=
+Operator.between            // BETWEEN
 Operator.isNull             // IS NULL
 Operator.isNotNull          // IS NOT NULL
 

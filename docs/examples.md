@@ -203,6 +203,47 @@ WHERE date > today() - 14d
 ORDER BY date DESC
 ```
 
+## Custom Date/Time Queries
+
+### Active Calories for a Specific Hour
+
+```sql
+-- Get active calorie count for Feb 5th, 4:00 PM - 5:00 PM
+SELECT sum(value) FROM active_calories
+WHERE date BETWEEN '2026-02-05 16:00' AND '2026-02-05 17:00'
+```
+
+### Heart Rate for a Specific Date Range
+
+```sql
+SELECT avg(value), min(value), max(value) FROM heart_rate
+WHERE date BETWEEN '2026-01-15' AND '2026-01-22'
+GROUP BY day
+ORDER BY date ASC
+```
+
+### Steps on a Specific Day
+
+```sql
+SELECT sum(value) FROM steps
+WHERE date > '2026-02-05' AND date < '2026-02-06'
+GROUP BY hour
+```
+
+### Data from the Last 4 Hours
+
+```sql
+SELECT avg(value) FROM heart_rate
+WHERE date > today() - 4h
+```
+
+### Workout During a Specific Morning
+
+```sql
+SELECT duration, total_calories, activity_type FROM workouts
+WHERE date BETWEEN '2026-02-05 06:00' AND '2026-02-05 12:00'
+```
+
 ## Comparison Queries
 
 ### Today vs Yesterday

@@ -75,7 +75,24 @@ WHERE value <> 0
 ```sql
 WHERE date > today()
 WHERE date > today() - 7d
+WHERE date > today() - 4h
 WHERE date > start_of_month()
+```
+
+### Custom Date/Time Literals
+
+```sql
+WHERE date > '2026-02-05'
+WHERE date > '2026-02-05 16:00'
+WHERE date > '2026-02-05 16:30:45'
+```
+
+### BETWEEN Operator
+
+```sql
+WHERE date BETWEEN '2026-02-05 16:00' AND '2026-02-05 17:00'
+WHERE date BETWEEN today() - 7d AND today()
+WHERE value BETWEEN 60 AND 100
 ```
 
 ### Multiple Conditions
@@ -169,6 +186,23 @@ SELECT sum(value)
 FROM active_calories
 WHERE date > today() - 1y
 GROUP BY month
+```
+
+### Active Calories for a Specific Hour
+
+```sql
+SELECT sum(value)
+FROM active_calories
+WHERE date BETWEEN '2026-02-05 16:00' AND '2026-02-05 17:00'
+```
+
+### Heart Rate for a Date Range
+
+```sql
+SELECT avg(value), min(value), max(value)
+FROM heart_rate
+WHERE date BETWEEN '2026-01-15' AND '2026-01-22'
+GROUP BY day
 ```
 
 ## Case Sensitivity
