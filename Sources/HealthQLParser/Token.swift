@@ -32,6 +32,9 @@ public enum TokenType: Equatable, Sendable {
     case startOfMonth
     case startOfYear
 
+    // BETWEEN keyword
+    case between       // BETWEEN ... AND ...
+
     // Literals
     case identifier    // table/column names: steps, heart_rate
     case number        // 42, 3.14

@@ -6,6 +6,7 @@ public enum DateReference: Sendable {
     case startOfWeek
     case startOfMonth
     case startOfYear
+    case hoursAgo(Int)
     case daysAgo(Int)
     case weeksAgo(Int)
     case monthsAgo(Int)
@@ -31,6 +32,9 @@ public enum DateReference: Sendable {
         case .startOfYear:
             let components = calendar.dateComponents([.year], from: now)
             return calendar.date(from: components) ?? now
+
+        case .hoursAgo(let hours):
+            return calendar.date(byAdding: .hour, value: -hours, to: now) ?? now
 
         case .daysAgo(let days):
             let startOfToday = calendar.startOfDay(for: now)

@@ -86,6 +86,74 @@ struct ParserComplexTests {
         #expect(stmt.limit == 10)
     }
 
+    @Test("Parser handles BETWEEN with date strings")
+    func betweenWithDateStrings() throws {
+        let parser = try Parser("SELECT sum(value) FROM active_calories WHERE date BETWEEN '2026-02-05 16:00' AND '2026-02-05 17:00'")
+        let stmt = try parser.parse()
+
+        #expect(stmt.whereClause != nil)
+        guard case .between(let field, let low, let high) = stmt.whereClause! else {
+            Issue.record("Expected BETWEEN expression")
+            return
+        }
+        #expect(field == .identifier("date"))
+        #expect(low == .string("2026-02-05 16:00"))
+        #expect(high == .string("2026-02-05 17:00"))
+    }
+
+    @Test("Parser handles BETWEEN with date-only strings")
+    func betweenWithDateOnly() throws {
+        let parser = try Parser("SELECT * FROM steps WHERE date BETWEEN '2026-02-01' AND '2026-02-07'")
+        let stmt = try parser.parse()
+
+        guard case .between(_, let low, let high) = stmt.whereClause! else {
+            Issue.record("Expected BETWEEN expression")
+            return
+        }
+        #expect(low == .string("2026-02-01"))
+        #expect(high == .string("2026-02-07"))
+    }
+
+    @Test("Parser handles BETWEEN with date functions")
+    func betweenWithDateFunctions() throws {
+        let parser = try Parser("SELECT * FROM steps WHERE date BETWEEN today() - 7d AND today()")
+        let stmt = try parser.parse()
+
+        guard case .between(let field, _, _) = stmt.whereClause! else {
+            Issue.record("Expected BETWEEN expression")
+            return
+        }
+        #expect(field == .identifier("date"))
+    }
+
+    @Test("Parser handles hour duration")
+    func hourDuration() throws {
+        let parser = try Parser("SELECT * FROM heart_rate WHERE date > today() - 4h")
+        let stmt = try parser.parse()
+
+        guard case .binary(_, .greaterThan, let right) = stmt.whereClause! else {
+            Issue.record("Expected binary expression")
+            return
+        }
+        guard case .binary(_, .minus, .duration(4, .hours)) = right else {
+            Issue.record("Expected hour duration arithmetic")
+            return
+        }
+    }
+
+    @Test("Parser handles date comparison with string literal")
+    func dateComparisonWithStringLiteral() throws {
+        let parser = try Parser("SELECT * FROM steps WHERE date > '2026-02-05'")
+        let stmt = try parser.parse()
+
+        guard case .binary(let left, .greaterThan, let right) = stmt.whereClause! else {
+            Issue.record("Expected binary expression")
+            return
+        }
+        #expect(left == .identifier("date"))
+        #expect(right == .string("2026-02-05"))
+    }
+
     @Test("Parser handles full complex query")
     func fullComplexQuery() throws {
         let query = """

@@ -170,6 +170,24 @@ public final class Compiler: Sendable {
             return [IRPredicate(field: field, op: op, value: .null)]
         }
 
+        // BETWEEN low AND high
+        if case .between(let fieldExpr, let low, let high) = expr {
+            let field = try resolveFieldFromExpression(fieldExpr)
+            let lowValue = try compileValue(low)
+            let highValue = try compileValue(high)
+
+            // Extract dates for date range
+            if case .date(let startDate) = lowValue, case .date(let endDate) = highValue {
+                return [IRPredicate(field: field, op: .between, value: .dateRange(start: startDate, end: endDate))]
+            }
+
+            // For non-date BETWEEN, expand to >= AND <=
+            return [
+                IRPredicate(field: field, op: .greaterThanOrEqual, value: lowValue),
+                IRPredicate(field: field, op: .lessThanOrEqual, value: highValue)
+            ]
+        }
+
         throw CompilerError.invalidExpression("Unsupported WHERE expression")
     }
 
@@ -192,6 +210,10 @@ public final class Compiler: Sendable {
             return .double(n)
 
         case .string(let s):
+            // Try to parse as date/datetime string
+            if let date = parseDateTime(s) {
+                return .date(date)
+            }
             return .string(s)
 
         case .function(let fn, _):
@@ -241,6 +263,8 @@ public final class Compiler: Sendable {
         let calendar = Calendar.current
 
         switch unit {
+        case .hours:
+            return calendar.date(byAdding: .hour, value: -amount, to: date) ?? date
         case .days:
             return calendar.date(byAdding: .day, value: -amount, to: date) ?? date
         case .weeks:
@@ -250,6 +274,34 @@ public final class Compiler: Sendable {
         case .years:
             return calendar.date(byAdding: .year, value: -amount, to: date) ?? date
         }
+    }
+
+    /// Parse a date or datetime string literal
+    /// Supported formats: 'YYYY-MM-DD', 'YYYY-MM-DD HH:mm', 'YYYY-MM-DD HH:mm:ss'
+    private func parseDateTime(_ string: String) -> Date? {
+        let formatter = DateFormatter()
+        formatter.locale = Locale(identifier: "en_US_POSIX")
+        formatter.timeZone = Calendar.current.timeZone
+
+        // Try datetime with seconds: 'YYYY-MM-DD HH:mm:ss'
+        formatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
+        if let date = formatter.date(from: string) {
+            return date
+        }
+
+        // Try datetime: 'YYYY-MM-DD HH:mm'
+        formatter.dateFormat = "yyyy-MM-dd HH:mm"
+        if let date = formatter.date(from: string) {
+            return date
+        }
+
+        // Try date only: 'YYYY-MM-DD'
+        formatter.dateFormat = "yyyy-MM-dd"
+        if let date = formatter.date(from: string) {
+            return date
+        }
+
+        return nil
     }
 
     // MARK: - GROUP BY Compilation
