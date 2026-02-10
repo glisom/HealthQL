@@ -23,6 +23,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - `WHERE date > today() - 4h` for sub-day relative queries
   - `DateReference.hoursAgo(Int)` in the Swift DSL
 
+## [1.2.1] - 2026-02-10
+
+### Changes
+
+- fix: use macos-26 runner for Swift 6.2 compatibility
+- fix: update CI workflow for current runner environments
+
 ## [1.2.0] - 2026-02-08
 
 ### Added
